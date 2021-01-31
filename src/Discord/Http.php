@@ -129,70 +129,90 @@ class Http
     /**
      * Runs a GET request.
      *
-     * @param string $url
+     * @param string|Endpoint $url
      * @param mixed  $content
      * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
-    public function get(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function get($url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
+        if (! ($url instanceof Endpoint)) {
+            $url = Endpoint::bind($url);
+        }
+
         return $this->queueRequest('get', $url, $content, $headers);
     }
 
     /**
      * Runs a POST request.
      *
-     * @param string $url
+     * @param string|Endpoint $url
      * @param mixed  $content
      * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
-    public function post(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function post($url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
+        if (! ($url instanceof Endpoint)) {
+            $url = Endpoint::bind($url);
+        }
+
         return $this->queueRequest('post', $url, $content, $headers);
     }
 
     /**
      * Runs a PUT request.
      *
-     * @param string $url
+     * @param string|Endpoint $url
      * @param mixed  $content
      * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
-    public function put(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function put($url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
+        if (! ($url instanceof Endpoint)) {
+            $url = Endpoint::bind($url);
+        }
+
         return $this->queueRequest('put', $url, $content, $headers);
     }
 
     /**
      * Runs a PATCH request.
      *
-     * @param string $url
+     * @param string|Endpoint $url
      * @param mixed  $content
      * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
-    public function patch(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function patch($url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
+        if (! ($url instanceof Endpoint)) {
+            $url = Endpoint::bind($url);
+        }
+
         return $this->queueRequest('patch', $url, $content, $headers);
     }
 
     /**
      * Runs a DELETE request.
      *
-     * @param string $url
+     * @param string|Endpoint $url
      * @param mixed  $content
      * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
-    public function delete(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function delete($url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
+        if (! ($url instanceof Endpoint)) {
+            $url = Endpoint::bind($url);
+        }
+
         return $this->queueRequest('delete', $url, $content, $headers);
     }
 
@@ -200,13 +220,13 @@ class Http
      * Builds and queues a request.
      *
      * @param string $method
-     * @param string $url
+     * @param Endpoint $url
      * @param mixed  $content
      * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
-    public function queueRequest(string $method, string $url, $content, array $headers = []): ExtendedPromiseInterface
+    public function queueRequest(string $method, Endpoint $url, $content, array $headers = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -239,12 +259,8 @@ class Http
 
         $headers = array_merge($baseHeaders, $headers);
 
-        $fullUrl = self::BASE_URL.'/'.$url;
-
-        $request = new Request($deferred, $method, $fullUrl, $content ?? '', $headers);
+        $request = new Request($deferred, $method, $url, $content ?? '', $headers);
         $this->sortIntoBucket($request);
-
-        $this->logger->debug($request.' queued');
 
         return $deferred->promise();
     }

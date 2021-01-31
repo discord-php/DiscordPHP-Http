@@ -110,6 +110,7 @@ class Bucket
     public function enqueue(Request $request)
     {
         $this->queue->enqueue($request);
+        $this->logger->debug($this.' queued '.$request);
         $this->checkQueue();
     }
 

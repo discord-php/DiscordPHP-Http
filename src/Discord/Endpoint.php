@@ -154,7 +154,7 @@ class Endpoint
      *
      * @var string[]
      */
-    protected $vars;
+    protected $vars = [];
 
     /**
      * Array of arguments to substitute into the endpoint.

@@ -37,7 +37,7 @@ class Request
     /**
      * Request URL.
      *
-     * @var string
+     * @var Endpoint 
      */
     protected $url;
 
@@ -60,11 +60,11 @@ class Request
      *
      * @param Deferred $deferred
      * @param string   $method
-     * @param string   $url
+     * @param Endpoint   $url
      * @param string   $content
      * @param array    $headers
      */
-    public function __construct(Deferred $deferred, string $method, string $url, string $content, array $headers = [])
+    public function __construct(Deferred $deferred, string $method, Endpoint $url, string $content, array $headers = [])
     {
         $this->deferred = $deferred;
         $this->method = $method;
@@ -90,7 +90,7 @@ class Request
      */
     public function getUrl(): string
     {
-        return $this->url;
+        return Http::BASE_URL.'/'.$this->url;
     }
 
     /**
@@ -130,9 +130,7 @@ class Request
      */
     public function getBucketID(): string
     {
-        // TODO change
-        // Extract major parameters and method?
-        return $this->method.$this->url;
+        return $this->method.$this->url->toAbsoluteEndpoint(true);
     }
 
     /**
