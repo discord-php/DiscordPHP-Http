@@ -71,7 +71,7 @@ $http->get('oauth2/applications/@me')->done(function ($response) {
 
 ## License
 
-This software is licensed under the GNU General Public License v3.0 or later which can be viewed in the LICENSE.md file.
+This software is licensed under the MIT license which can be viewed in the LICENSE.md file.
 
 ## Credits
 
