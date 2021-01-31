@@ -15,6 +15,11 @@ use InvalidArgumentException;
 
 class Endpoint
 {
+    // GET
+    const GATEWAY = 'gateway';
+    // GET
+    const GATEWAY_BOT = self::GATEWAY.'/bot';
+
     // GET, POST
     const GLOBAL_APPLICATION_COMMANDS = 'applications/:application_id/commands';
     // GET, PATCH, DELETE
@@ -138,6 +143,8 @@ class Endpoint
     const USER_CURRENT_CHANNELS = self::USER_CURRENT.'/channels';
     // GET
     const USER_CURRENT_CONNECTIONS = self::USER_CURRENT.'/connections';
+    // GET
+    const APPLICATION_CURRENT = 'oauth2/applications/@me';
 
     const REGEX = '/:([^\/]*)/';
     const MAJOR_PARAMETERS = ['channel_id', 'guild_id', 'webhook_id'];
@@ -162,6 +169,14 @@ class Endpoint
      * @var string[]
      */
     protected $args = [];
+
+    /**
+     * Array of query data to be appended
+     * to the end of the endpoint with `http_build_query`.
+     * 
+     * @var array
+     */
+    protected $query = [];
 
     /**
      * Creates an endpoint class.
@@ -195,6 +210,18 @@ class Endpoint
 
         return $this;
     }
+
+    /**
+     * Adds a key-value query pair to the endpoint.
+     *
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
+    public function addQuery(string $key, string $value): void
+    {
+        $this->query[$key] = $value;
+    }
     
     /**
      * Converts the endpoint into the absolute endpoint with
@@ -220,6 +247,10 @@ class Endpoint
                 continue;
             }
             $endpoint = str_replace(":{$var}", array_shift($args), $endpoint);
+        }
+
+        if (! $onlyMajorParameters && count($this->query) > 0) {
+            $endpoint .= '?'.http_build_query($this->query);
         }
 
         return $endpoint;
