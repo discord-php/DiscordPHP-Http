@@ -87,7 +87,7 @@ class Endpoint
     // PATCH
     const GUILD_MEMBER_SELF_NICK = self::GUILD.'/members/@me/nick';
     // PUT, DELETE
-    const GUILD_MEMBER_ROLE = self::GUILD.'/members/roles/:role_id';
+    const GUILD_MEMBER_ROLE = self::GUILD.'/members/:user_id/roles/:role_id';
 
     // GET
     const GUILD_BANS = self::GUILD.'/bans';
