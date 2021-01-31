@@ -72,6 +72,9 @@ class Endpoint
     // DELETE
     const USER_MESSAGE_REACTION = self::CHANNEL.'/messages/:message_id/reactions/:emoji/:user_id';
 
+    // GET, POST
+    const CHANNEL_WEBHOOKS = self::CHANNEL.'/webhooks';
+
     // GET, PATCH, DELETE
     const GUILD = 'guilds/:guild_id';
     // GET, POST, PATCH
@@ -127,6 +130,8 @@ class Endpoint
     const GUILD_VANITY_URL = self::GUILD.'/vanity-url';
     // GET, PATCH
     const GUILD_MEMBERSHIP_SCREENING = self::GUILD.'/member-verification';
+    // GET
+    const GUILD_WEBHOOKS = self::GUILD.'/webhooks';
 
     // GET, DELETE
     const INVITE = 'invites/:invite_code';
@@ -145,6 +150,20 @@ class Endpoint
     const USER_CURRENT_CONNECTIONS = self::USER_CURRENT.'/connections';
     // GET
     const APPLICATION_CURRENT = 'oauth2/applications/@me';
+
+    // GET, PATCH, DELETE
+    const WEBHOOK = 'webhooks/:webhook_id';
+    // GET, PATCH, DELETE
+    const WEBHOOK_TOKEN = 'webhooks/:webhook_id/:webhook_token';
+    // POST
+    const WEBHOOK_EXECUTE = self::WEBHOOK_TOKEN;
+    // POST
+    const WEBHOOK_EXECUTE_SLACK = self::WEBHOOK_EXECUTE.'/slack';
+    // POST
+    const WEBHOOK_EXECUTE_GITHUB = self::WEBHOOK_EXECUTE.'/github';
+    // PATCH, DELETE
+    const WEBHOOK_MESSAGE = self::WEBHOOK_TOKEN.'/messages/:message_id';
+
 
     const REGEX = '/:([^\/]*)/';
     const MAJOR_PARAMETERS = ['channel_id', 'guild_id', 'webhook_id'];
