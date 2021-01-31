@@ -69,6 +69,19 @@ $http->get('oauth2/applications/@me')->done(function ($response) {
 });
 ```
 
+Most Discord endpoints are provided in the [Endpoint.php](src/Discord/Endpoint.php) class as constants. Parameters start with a colon,
+e.g. `channels/:channel_id/messages/:message_id`. You can bind parameters to then with the same class:
+
+```php
+// channels/channel_id_here/messages/message_id_here
+$endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGE, 'channel_id_here', 'message_id_here');
+
+$http->get($endpoint)->done(...);
+```
+
+It is recommended that if the endpoint contains parameters you use the `Endpoint::bind()` function to sort requests into their correct rate limit buckets.
+For an example, see [DiscordPHP](https://github.com/discord-php/DiscordPHP).
+
 ## License
 
 This software is licensed under the MIT license which can be viewed in the LICENSE.md file.

@@ -164,8 +164,19 @@ class Endpoint
     // PATCH, DELETE
     const WEBHOOK_MESSAGE = self::WEBHOOK_TOKEN.'/messages/:message_id';
 
-
+    /**
+     * Regex to identify parameters in endpoints.
+     *
+     * @var string
+     */
     const REGEX = '/:([^\/]*)/';
+
+    /**
+     * A list of parameters considered 'major' by Discord.
+     *
+     * @see 
+     * @var string[]
+     */
     const MAJOR_PARAMETERS = ['channel_id', 'guild_id', 'webhook_id'];
 
     /**
