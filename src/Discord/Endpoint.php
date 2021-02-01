@@ -132,7 +132,7 @@ class Endpoint
     const GUILD_WEBHOOKS = self::GUILD.'/webhooks';
 
     // GET, DELETE
-    const INVITE = 'invites/:invite_code';
+    const INVITE = 'invites/:code';
 
     // GET, PATCH
     const USER_CURRENT = 'users/@me';
