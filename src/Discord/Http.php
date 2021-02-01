@@ -130,8 +130,8 @@ class Http
      * Runs a GET request.
      *
      * @param string|Endpoint $url
-     * @param mixed  $content
-     * @param array  $headers
+     * @param mixed           $content
+     * @param array           $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -148,8 +148,8 @@ class Http
      * Runs a POST request.
      *
      * @param string|Endpoint $url
-     * @param mixed  $content
-     * @param array  $headers
+     * @param mixed           $content
+     * @param array           $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -166,8 +166,8 @@ class Http
      * Runs a PUT request.
      *
      * @param string|Endpoint $url
-     * @param mixed  $content
-     * @param array  $headers
+     * @param mixed           $content
+     * @param array           $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -184,8 +184,8 @@ class Http
      * Runs a PATCH request.
      *
      * @param string|Endpoint $url
-     * @param mixed  $content
-     * @param array  $headers
+     * @param mixed           $content
+     * @param array           $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -202,8 +202,8 @@ class Http
      * Runs a DELETE request.
      *
      * @param string|Endpoint $url
-     * @param mixed  $content
-     * @param array  $headers
+     * @param mixed           $content
+     * @param array           $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -219,10 +219,10 @@ class Http
     /**
      * Builds and queues a request.
      *
-     * @param string $method
+     * @param string   $method
      * @param Endpoint $url
-     * @param mixed  $content
-     * @param array  $headers
+     * @param mixed    $content
+     * @param array    $headers
      *
      * @return ExtendedPromiseInterface
      */

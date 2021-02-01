@@ -37,7 +37,7 @@ class Request
     /**
      * Request URL.
      *
-     * @var Endpoint 
+     * @var Endpoint
      */
     protected $url;
 
@@ -60,7 +60,7 @@ class Request
      *
      * @param Deferred $deferred
      * @param string   $method
-     * @param Endpoint   $url
+     * @param Endpoint $url
      * @param string   $content
      * @param array    $headers
      */

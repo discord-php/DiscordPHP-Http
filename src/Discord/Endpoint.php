@@ -11,8 +11,6 @@
 
 namespace Discord\Http;
 
-use InvalidArgumentException;
-
 class Endpoint
 {
     // GET
@@ -174,7 +172,7 @@ class Endpoint
     /**
      * A list of parameters considered 'major' by Discord.
      *
-     * @see 
+     * @see https://discord.com/developers/docs/topics/rate-limits
      * @var string[]
      */
     const MAJOR_PARAMETERS = ['channel_id', 'guild_id', 'webhook_id'];
@@ -203,7 +201,7 @@ class Endpoint
     /**
      * Array of query data to be appended
      * to the end of the endpoint with `http_build_query`.
-     * 
+     *
      * @var array
      */
     protected $query = [];
@@ -230,13 +228,22 @@ class Endpoint
      */
     public function bindArgs(...$args): self
     {
-        foreach ($args as $arg) {
-            if (is_array($arg)) {
-                $this->bindArgs(...$arg);
-            } else {
-                $this->args[] = $arg;
-            }
+        for ($i = 0; $i < count($this->vars) && $i < count($args); $i++) {
+            $this->args[$this->vars[$i]] = $args[$i];
         }
+
+        return $this;
+    }
+
+    /**
+     * Binds an associative array to the endpoint.
+     *
+     * @param  string[] $args
+     * @return this
+     */
+    public function bindAssoc(array $args): self
+    {
+        $this->args = array_merge($this->args, $args);
 
         return $this;
     }
@@ -246,7 +253,6 @@ class Endpoint
      *
      * @param string $key
      * @param string $value
-     * @return void
      */
     public function addQuery(string $key, string $value): void
     {
@@ -265,18 +271,14 @@ class Endpoint
      */
     public function toAbsoluteEndpoint(bool $onlyMajorParameters = false): string
     {
-        $args = $this->args;
         $endpoint = $this->endpoint;
 
-        if (count($this->vars) > count($this->args)) {
-            throw new InvalidArgumentException('There are more variables than there arguments.');
-        }
-
         foreach ($this->vars as $var) {
-            if ($onlyMajorParameters && ! $this->isMajorParameter($var)) {
+            if (! isset($this->args[$var]) || ($onlyMajorParameters && ! $this->isMajorParameter($var))) {
                 continue;
             }
-            $endpoint = str_replace(":{$var}", array_shift($args), $endpoint);
+
+            $endpoint = str_replace(":{$var}", $this->args[$var], $endpoint);
         }
 
         if (! $onlyMajorParameters && count($this->query) > 0) {
