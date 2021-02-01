@@ -73,6 +73,8 @@ class Endpoint
     // GET, POST
     const CHANNEL_WEBHOOKS = self::CHANNEL.'/webhooks';
 
+    // POST
+    const GUILDS = 'guilds';
     // GET, PATCH, DELETE
     const GUILD = 'guilds/:guild_id';
     // GET, POST, PATCH
