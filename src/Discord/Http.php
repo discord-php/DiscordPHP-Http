@@ -293,7 +293,7 @@ class Http
 
                 if ($rateLimit->isGlobal() && ! $this->rateLimit) {
                     $this->rateLimit = $rateLimit;
-                    $this->rateLimitReset = $this->loop->addTimer($rateLimit->getRetryAfter() / 1000, function () {
+                    $this->rateLimitReset = $this->loop->addTimer($rateLimit->getRetryAfter(), function () {
                         $this->rateLimit = null;
                         $this->rateLimitReset = null;
                         $this->logger->info('global rate-limit reset');
