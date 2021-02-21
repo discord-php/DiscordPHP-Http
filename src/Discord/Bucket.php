@@ -184,7 +184,7 @@ class Bucket
                 // Bucket-specific rate-limit
                 // Re-queue the request and wait the retry after time
                 if (! $rateLimit->isGlobal()) {
-                    $this->loop->addTimer($rateLimit->getRetryAfter() / 1000, $checkQueue);
+                    $this->loop->addTimer($rateLimit->getRetryAfter(), $checkQueue);
                 }
                 // Stop the queue checker for a global rate-limit.
                 // Will be restarted when global rate-limit finished.
