@@ -22,6 +22,7 @@ use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Promise\ExtendedPromiseInterface;
+use SplQueue;
 use Throwable;
 
 /**
@@ -51,6 +52,14 @@ class Http
      * @var string
      */
     const BASE_URL = 'https://discord.com/api/v'.self::HTTP_API_VERSION;
+
+    /**
+     * The number of concurrent requests which can
+     * be executed.
+     * 
+     * @var int
+     */
+    const CONCURRENT_REQUESTS = 5;
 
     /**
      * Authentication token.
@@ -102,6 +111,21 @@ class Http
     protected $rateLimitReset;
 
     /**
+     * Request queue to prevent API
+     * overload.
+     * 
+     * @var SplQueue
+     */
+    protected $queue;
+
+    /**
+     * Number of requests that are waiting for a response.
+     * 
+     * @var int
+     */
+    protected $waiting = 0;
+
+    /**
      * Http wrapper constructor.
      *
      * @param string               $token
@@ -114,6 +138,7 @@ class Http
         $this->loop = $loop;
         $this->logger = $logger;
         $this->driver = $driver;
+        $this->queue = new SplQueue;
     }
 
     /**
@@ -360,13 +385,42 @@ class Http
     {
         if (! isset($this->buckets[$key])) {
             $bucket = new Bucket($key, $this->loop, $this->logger, function (Request $request) {
-                return $this->executeRequest($request);
+                $deferred = new Deferred();
+                $this->queue->enqueue([$request, $deferred]);
+                $this->checkQueue();
+                return $deferred->promise();
             });
 
             $this->buckets[$key] = $bucket;
         }
 
         return $this->buckets[$key];
+    }
+
+    /**
+     * Checks the request queue to see if more requests can be
+     * sent out.
+     */
+    protected function checkQueue(): void
+    {
+        if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) return;
+
+        /**
+         * @var Request $request
+         * @var Deferred $deferred
+         */
+        [$request, $deferred] = $this->queue->dequeue();
+        ++$this->waiting;
+
+        $this->executeRequest($request)->then(function ($result) use ($deferred) {
+            --$this->waiting;
+            $this->checkQueue();
+            $deferred->resolve($result);
+        }, function ($e) use ($deferred) {
+            --$this->waiting;
+            $this->checkQueue();
+            $deferred->reject($e);
+        });
     }
 
     /**
