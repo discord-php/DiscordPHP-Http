@@ -56,7 +56,7 @@ class Http
     /**
      * The number of concurrent requests which can
      * be executed.
-     * 
+     *
      * @var int
      */
     const CONCURRENT_REQUESTS = 5;
@@ -113,14 +113,14 @@ class Http
     /**
      * Request queue to prevent API
      * overload.
-     * 
+     *
      * @var SplQueue
      */
     protected $queue;
 
     /**
      * Number of requests that are waiting for a response.
-     * 
+     *
      * @var int
      */
     protected $waiting = 0;
@@ -388,6 +388,7 @@ class Http
                 $deferred = new Deferred();
                 $this->queue->enqueue([$request, $deferred]);
                 $this->checkQueue();
+
                 return $deferred->promise();
             });
 
@@ -403,10 +404,12 @@ class Http
      */
     protected function checkQueue(): void
     {
-        if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) return;
+        if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) {
+            return;
+        }
 
         /**
-         * @var Request $request
+         * @var Request  $request
          * @var Deferred $deferred
          */
         [$request, $deferred] = $this->queue->dequeue();
