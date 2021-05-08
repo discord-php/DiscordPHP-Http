@@ -2,7 +2,7 @@
     "name": "discord-php/http",
     "description": "Handles HTTP requests to Discord servers",
     "type": "library",
-    "license": "GPL-3.0-or-later",
+    "license": "MIT",
     "authors": [
         {
             "name": "David Cole",
