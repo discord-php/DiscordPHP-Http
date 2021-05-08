@@ -294,12 +294,15 @@ class Http
      * Executes a request.
      *
      * @param Request $request
+     * @param Deferred $deferred
      *
      * @return ExtendedPromiseInterface
      */
-    protected function executeRequest(Request $request): ExtendedPromiseInterface
+    protected function executeRequest(Request $request, Deferred $deferred = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
+        if ($deferred === null) {
+            $deferred = new Deferred();
+        }
 
         if ($this->rateLimit) {
             $deferred->reject($this->rateLimit);
@@ -336,9 +339,9 @@ class Http
             // Cloudflare SSL Handshake error
             // Push to the back of the bucket to be retried.
             elseif ($statusCode == 502 || $statusCode == 525) {
-                $this->logger->warning($request.' 502/525 - sorting to back of bucket');
+                $this->logger->warning($request.' 502/525 - retrying request');
 
-                $this->sortIntoBucket($request);
+                $this->executeRequest($request, $deferred);
             }
             // Any other unsuccessful status codes
             elseif ($statusCode < 200 || $statusCode >= 300) {
