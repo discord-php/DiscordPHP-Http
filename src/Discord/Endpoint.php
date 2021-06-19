@@ -196,7 +196,7 @@ class Endpoint
      * @see https://discord.com/developers/docs/topics/rate-limits
      * @var string[]
      */
-    const MAJOR_PARAMETERS = ['channel_id', 'guild_id', 'webhook_id'];
+    const MAJOR_PARAMETERS = ['channel_id', 'guild_id', 'webhook_id', 'thread_id'];
 
     /**
      * The string version of the endpoint, including all parameters.
