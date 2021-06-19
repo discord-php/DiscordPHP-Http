@@ -60,6 +60,25 @@ class Endpoint
     const CHANNEL_PINS = self::CHANNEL.'/pins';
     // PUT, DELETE
     const CHANNEL_PIN = self::CHANNEL.'/pins/:message_id';
+    // POST
+    const CHANNEL_THREADS = self::CHANNEL.'/threads';
+    // POST
+    const CHANNEL_MESSAGE_THREADS = self::CHANNEL_MESSAGE.'/threads';
+    // GET
+    const CHANNEL_THREADS_ACTIVE = self::CHANNEL_THREADS.'/active';
+    // GET
+    const CHANNEL_THREADS_ARCHIVED_PUBLIC = self::CHANNEL_THREADS.'/archived/public';
+    // GET
+    const CHANNEL_THREADS_ARCHIVED_PRIVATE = self::CHANNEL_THREADS.'/archived/private';
+    // GET
+    const CHANNEL_THREADS_ARCHIVED_PRIVATE_ME = self::CHANNEL.'/users/@me/threads/archived/private';
+
+    // GET, PATCH, DELETE
+    const THREAD = 'channels/:thread_id';
+    // GET
+    const THREAD_MEMBERS = self::THREAD.'/thread-members';
+    // PUT, DELETE
+    const THREAD_MEMBER = self::THREAD_MEMBERS.'/:user_id';
 
     // GET, DELETE
     const MESSAGE_REACTION_ALL = self::CHANNEL.'/messages/:message_id/reactions';
