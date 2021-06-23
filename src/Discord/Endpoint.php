@@ -79,6 +79,8 @@ class Endpoint
     const THREAD_MEMBERS = self::THREAD.'/thread-members';
     // PUT, DELETE
     const THREAD_MEMBER = self::THREAD_MEMBERS.'/:user_id';
+    // PUT, DELETE
+    const THREAD_MEMBER_ME = self::THREAD_MEMBERS.'/@me';
 
     // GET, DELETE
     const MESSAGE_REACTION_ALL = self::CHANNEL.'/messages/:message_id/reactions';
