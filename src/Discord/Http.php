@@ -438,13 +438,22 @@ class Http
      */
     public function handleError(ResponseInterface $response): Throwable
     {
+        $reason = $response->getReasonPhrase().' - ';
+
+        // attempt to prettyify the response content
+        if (($content = json_decode((string) $response->getBody())) !== null) {
+            $reason .= json_encode($content, JSON_PRETTY_PRINT);
+        } else {
+            $reason .= (string) $response->getBody();
+        }
+
         switch ($response->getStatusCode()) {
             case 401:
-                return new InvalidTokenException($response->getReasonPhrase());
+                return new InvalidTokenException($reason);
             case 403:
-                return new NoPermissionsException($response->getReasonPhrase());
+                return new NoPermissionsException($reason);
             case 404:
-                return new NotFoundException($response->getReasonPhrase());
+                return new NotFoundException($reason);
             case 500:
                 if (strpos(strtolower((string) $response->getBody()), 'longer than 2000 characters') !== false ||
                     strpos(strtolower((string) $response->getBody()), 'string value is too long') !== false) {
@@ -452,7 +461,7 @@ class Http
                     return new ContentTooLongException('Response was more than 2000 characters. Use another method to get this data.');
                 }
             default:
-                return new RequestFailedException($response->getReasonPhrase());
+                return new RequestFailedException($reason);
         }
     }
 
