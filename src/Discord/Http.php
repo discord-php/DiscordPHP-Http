@@ -37,7 +37,7 @@ class Http
      *
      * @var string
      */
-    public const VERSION = 'v8.1.1';
+    public const VERSION = 'v8.1.2';
 
     /**
      * Current Discord HTTP API version.
