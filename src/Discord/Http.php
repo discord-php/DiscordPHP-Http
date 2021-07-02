@@ -3,10 +3,10 @@
 /*
  * This file is a part of the DiscordPHP-Http project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is
- * bundled with this source code in the LICENSE.md file.
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE file.
  */
 
 namespace Discord\Http;
@@ -37,21 +37,21 @@ class Http
      *
      * @var string
      */
-    const VERSION = 'v9.0.0';
+    public const VERSION = 'v9.0.0';
 
     /**
      * Current Discord HTTP API version.
      *
      * @var string
      */
-    const HTTP_API_VERSION = 9;
+    public const HTTP_API_VERSION = 9;
 
     /**
      * Discord API base URL.
      *
      * @var string
      */
-    const BASE_URL = 'https://discord.com/api/v'.self::HTTP_API_VERSION;
+    public const BASE_URL = 'https://discord.com/api/v'.self::HTTP_API_VERSION;
 
     /**
      * The number of concurrent requests which can
@@ -59,7 +59,7 @@ class Http
      *
      * @var int
      */
-    const CONCURRENT_REQUESTS = 5;
+    public const CONCURRENT_REQUESTS = 5;
 
     /**
      * Authentication token.
@@ -293,7 +293,7 @@ class Http
     /**
      * Executes a request.
      *
-     * @param Request $request
+     * @param Request  $request
      * @param Deferred $deferred
      *
      * @return ExtendedPromiseInterface

@@ -84,7 +84,7 @@ For an example, see [DiscordPHP](https://github.com/discord-php/DiscordPHP).
 
 ## License
 
-This software is licensed under the MIT license which can be viewed in the LICENSE.md file.
+This software is licensed under the MIT license which can be viewed in the [LICENSE](LICENSE) file.
 
 ## Credits
 
