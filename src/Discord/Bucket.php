@@ -121,6 +121,7 @@ class Bucket
     {
         // We are already checking the queue.
         if ($this->checkerRunning) {
+            $this->logger->debug($this.' already checking queue');
             return;
         }
 
@@ -135,6 +136,7 @@ class Bucket
 
             // Queue is empty, job done.
             if ($this->queue->isEmpty()) {
+                $this->logger->debug($this.' queue empty');
                 $this->checkerRunning = false;
 
                 return;
