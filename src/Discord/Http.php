@@ -348,6 +348,7 @@ class Http
                 $error = $this->handleError($response);
                 $this->logger->warning($request.' failed: '.$error);
 
+                $deferred->reject($error);
                 $request->getDeferred()->reject($error);
             }
             // All is well
@@ -408,6 +409,7 @@ class Http
     protected function checkQueue(): void
     {
         if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) {
+            $this->logger->debug('http not checking', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
             return;
         }
 
