@@ -144,10 +144,11 @@ class Bucket
 
             /** @var Request */
             $request = $this->queue->dequeue();
-            $request->getDeferred()->promise()->otherwise(function () use ($checkQueue) {
-                // exception happened - move on to next request
-                $checkQueue();
-            });
+            // $request->getDeferred()->promise()->otherwise(function () use ($checkQueue) {
+            //     // exception happened - move on to next request
+            //     $this->logger->debug($this.' request failed, rechecking queue');
+            //     $checkQueue();
+            // });
 
             ($this->runRequest)($request)->done(function (ResponseInterface $response) use (&$checkQueue) {
                 $resetAfter = (float) $response->getHeaderLine('X-Ratelimit-Reset-After');
@@ -180,18 +181,23 @@ class Bucket
 
                 // Check for more requests
                 $checkQueue();
-            }, function (RateLimit $rateLimit) use (&$checkQueue, $request) {
-                $this->queue->enqueue($request);
+            }, function ($rateLimit) use (&$checkQueue, $request) {
+                if ($rateLimit instanceof RateLimit) {
+                    $this->queue->enqueue($request);
 
-                // Bucket-specific rate-limit
-                // Re-queue the request and wait the retry after time
-                if (! $rateLimit->isGlobal()) {
-                    $this->loop->addTimer($rateLimit->getRetryAfter(), $checkQueue);
-                }
-                // Stop the queue checker for a global rate-limit.
-                // Will be restarted when global rate-limit finished.
-                else {
-                    $this->checkerRunning = false;
+                    // Bucket-specific rate-limit
+                    // Re-queue the request and wait the retry after time
+                    if (! $rateLimit->isGlobal()) {
+                        $this->loop->addTimer($rateLimit->getRetryAfter(), $checkQueue);
+                    }
+                    // Stop the queue checker for a global rate-limit.
+                    // Will be restarted when global rate-limit finished.
+                    else {
+                        $this->checkerRunning = false;
+                        $this->logger->debug($this.' stopping queue checker');
+                    }
+                } else {
+                    $checkQueue();
                 }
             });
         };
