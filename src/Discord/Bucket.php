@@ -127,7 +127,7 @@ class Bucket
 
         $checkQueue = function () use (&$checkQueue) {
             // Check for rate-limits
-            if ($this->requestRemaining < 1 && ! is_null($this->requestRemaining)) {
+            if ($this->requestRemaining < 1 && ! is_null($this->resetTimer)) {
                 $this->logger->info($this.' expecting rate limit, timer interval '.(($this->resetTimer->getInterval() ?? 0) * 1000).' ms');
                 $this->checkerRunning = false;
 
@@ -144,11 +144,6 @@ class Bucket
 
             /** @var Request */
             $request = $this->queue->dequeue();
-            // $request->getDeferred()->promise()->otherwise(function () use ($checkQueue) {
-            //     // exception happened - move on to next request
-            //     $this->logger->debug($this.' request failed, rechecking queue');
-            //     $checkQueue();
-            // });
 
             ($this->runRequest)($request)->done(function (ResponseInterface $response) use (&$checkQueue) {
                 $resetAfter = (float) $response->getHeaderLine('X-Ratelimit-Reset-After');
