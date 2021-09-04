@@ -18,14 +18,18 @@ class Endpoint
     // GET
     public const GATEWAY_BOT = self::GATEWAY.'/bot';
 
-    // GET, POST
+    // GET, POST, PUT
     public const GLOBAL_APPLICATION_COMMANDS = 'applications/:application_id/commands';
     // GET, PATCH, DELETE
-    public const GLOBAL_APPLICATION_COMMAND = 'application/:application_id/commands/:command_id';
-    // GET, POST
-    public const GUILD_APPLICATION_COMMANDS = 'application/:application_id/guilds/:guild_id/commands';
+    public const GLOBAL_APPLICATION_COMMAND = 'applications/:application_id/commands/:command_id';
+    // GET, POST, PUT
+    public const GUILD_APPLICATION_COMMANDS = 'applications/:application_id/guilds/:guild_id/commands';
+    // GET, PUT
+    public const GUILD_APPLICATION_COMMANDS_PERMISSIONS = 'applications/:application_id/guilds/:guild_id/commands/permissions';
     // GET, PATCH, DELETE
-    public const GUILD_APPLICATION_COMMAND = 'application/:application_id/guilds/:guild_id/commands/:command_id';
+    public const GUILD_APPLICATION_COMMAND = 'applications/:application_id/guilds/:guild_id/commands/:command_id';
+    // GET, PUT
+    public const GUILD_APPLICATION_COMMAND_PERMISSIONS = 'applications/:application_id/guilds/:guild_id/commands/:command_id/permissions';
     // POST
     public const INTERACTION_RESPONSE = 'interactions/:interaction_id/:interaction_token/callback';
     // PATCH, DELETE
