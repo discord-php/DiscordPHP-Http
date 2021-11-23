@@ -81,7 +81,7 @@ class Endpoint
     public const THREAD = 'channels/:thread_id';
     // GET
     public const THREAD_MEMBERS = self::THREAD.'/thread-members';
-    // PUT, DELETE
+    // GET, PUT, DELETE
     public const THREAD_MEMBER = self::THREAD_MEMBERS.'/:user_id';
     // PUT, DELETE
     public const THREAD_MEMBER_ME = self::THREAD_MEMBERS.'/@me';
@@ -107,6 +107,8 @@ class Endpoint
 
     // GET
     public const GUILD_MEMBERS = self::GUILD.'/members';
+    // GET
+    public const GUILD_MEMBERS_SEARCH = self::GUILD.'/members/search';
     // GET, PATCH, PUT, DELETE
     public const GUILD_MEMBER = self::GUILD.'/members/:user_id';
     // PATCH
