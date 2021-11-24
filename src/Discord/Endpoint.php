@@ -163,7 +163,7 @@ class Endpoint
     // GET, POST
     public const GUILD_SCHEDULED_EVENTS = self::GUILD.'/scheduled-events';
     // GET, PATCH, DELETE
-    public const GUILD_SCHEDULED_EVENT = self::GUILD_SCHEDULED_EVENTS.'/scheduled-events/:guild_scheduled_event_id';
+    public const GUILD_SCHEDULED_EVENT = self::GUILD.'/scheduled-events/:guild_scheduled_event_id';
     // GET
     public const GUILD_SCHEDULED_EVENT_USERS = self::GUILD.'/scheduled-events/:guild_scheduled_event_id/users';
 
