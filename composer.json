@@ -17,7 +17,7 @@
     "require": {
         "php": "^7.2|^8.0",
         "react/http": "^1.2",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1 || ^2.0 || ^3.0"
     },
     "require-dev": {
         "monolog/monolog": "^2.2",
