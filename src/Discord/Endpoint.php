@@ -155,6 +155,10 @@ class Endpoint
     public const GUILD_WIDGET_IMAGE = self::GUILD.'/widget.png';
     // GET, PATCH
     public const GUILD_WELCOME_SCREEN = self::GUILD.'/welcome-screen';
+    // PATCH
+    public const GUILD_USER_CURRENT_VOICE_STATE = self::GUILD.'/voice-states/@me';
+    // PATCH
+    public const GUILD_USER_VOICE_STATE = self::GUILD.'/voice-states/:user_id';
     // GET
     public const GUILD_VANITY_URL = self::GUILD.'/vanity-url';
     // GET, PATCH
