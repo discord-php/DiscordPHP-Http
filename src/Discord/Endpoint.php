@@ -160,6 +160,7 @@ class Endpoint
     // GET
     public const GUILD_WEBHOOKS = self::GUILD.'/webhooks';
 
+    // GET, POST
     public const GUILD_STICKERS = self::GUILD.'/stickers';
     // GET, PATCH, DELETE
     public const GUILD_STICKER = self::GUILD.'/stickers/:sticker_id';
