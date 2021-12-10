@@ -153,6 +153,8 @@ class Endpoint
     public const GUILD_WIDGET = self::GUILD.'/widget.json';
     // GET
     public const GUILD_WIDGET_IMAGE = self::GUILD.'/widget.png';
+    // GET, PATCH
+    public const GUILD_WELCOME_SCREEN = self::GUILD.'/welcome-screen';
     // GET
     public const GUILD_VANITY_URL = self::GUILD.'/vanity-url';
     // GET, PATCH
