@@ -153,12 +153,28 @@ class Endpoint
     public const GUILD_WIDGET = self::GUILD.'/widget.json';
     // GET
     public const GUILD_WIDGET_IMAGE = self::GUILD.'/widget.png';
+    // GET, PATCH
+    public const GUILD_WELCOME_SCREEN = self::GUILD.'/welcome-screen';
+    // PATCH
+    public const GUILD_USER_CURRENT_VOICE_STATE = self::GUILD.'/voice-states/@me';
+    // PATCH
+    public const GUILD_USER_VOICE_STATE = self::GUILD.'/voice-states/:user_id';
     // GET
     public const GUILD_VANITY_URL = self::GUILD.'/vanity-url';
     // GET, PATCH
     public const GUILD_MEMBERSHIP_SCREENING = self::GUILD.'/member-verification';
     // GET
     public const GUILD_WEBHOOKS = self::GUILD.'/webhooks';
+
+    // GET, POST
+    public const GUILD_STICKERS = self::GUILD.'/stickers';
+    // GET, PATCH, DELETE
+    public const GUILD_STICKER = self::GUILD.'/stickers/:sticker_id';
+
+    // GET
+    public const STICKER = 'stickers/:sticker_id';
+    // GET
+    public const STICKER_PACKS = 'sticker-packs';
 
     // GET, POST
     public const GUILD_SCHEDULED_EVENTS = self::GUILD.'/scheduled-events';
@@ -169,6 +185,9 @@ class Endpoint
 
     // GET, DELETE
     public const INVITE = 'invites/:code';
+
+    // GET, PATCH, DELETE
+    public const STAGE_INSTANCE = 'stage-instances/:channel_id';
 
     // GET, PATCH
     public const USER_CURRENT = 'users/@me';
