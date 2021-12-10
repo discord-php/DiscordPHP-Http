@@ -197,6 +197,8 @@ class Endpoint
     public const USER_CURRENT_GUILDS = self::USER_CURRENT.'/guilds';
     // DELETE
     public const USER_CURRENT_GUILD = self::USER_CURRENT.'/guilds/:guild_id';
+    // GET
+    public const USER_CURRENT_MEMBER = self::USER_CURRENT.'/guilds/:guild_id/member';
     // GET, POST
     public const USER_CURRENT_CHANNELS = self::USER_CURRENT.'/channels';
     // GET
