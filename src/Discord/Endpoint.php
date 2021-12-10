@@ -180,6 +180,9 @@ class Endpoint
     // GET, DELETE
     public const INVITE = 'invites/:code';
 
+    // GET, PATCH, DELETE
+    public const STAGE_INSTANCE = 'stage-instances/:channel_id';
+
     // GET, PATCH
     public const USER_CURRENT = 'users/@me';
     // GET
