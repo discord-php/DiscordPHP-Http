@@ -195,7 +195,7 @@ class Endpoint
     public const GUILDS_TEMPLATE = self::GUILDS.'/templates/:template_code';
     // GET, POST
     public const GUILD_TEMPLATES = self::GUILD.'/templates';
-    // PUT, PATCH, DELETE
+    // POST, PUT, PATCH, DELETE
     public const GUILD_TEMPLATE = self::GUILD.'/templates/:template_code';
 
     // GET, PATCH
