@@ -113,7 +113,7 @@ class Endpoint
     public const GUILD_MEMBER = self::GUILD.'/members/:user_id';
     // PATCH
     public const GUILD_MEMBER_SELF = self::GUILD.'/members/@me';
-    // PATCH
+    /** @deprecated 9.0.9 Use `GUILD_MEMBER_SELF` */
     public const GUILD_MEMBER_SELF_NICK = self::GUILD.'/members/@me/nick';
     // PUT, DELETE
     public const GUILD_MEMBER_ROLE = self::GUILD.'/members/:user_id/roles/:role_id';
