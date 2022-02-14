@@ -69,8 +69,6 @@ class Endpoint
     // POST
     public const CHANNEL_MESSAGE_THREADS = self::CHANNEL_MESSAGE.'/threads';
     // GET
-    public const CHANNEL_THREADS_ACTIVE = self::CHANNEL_THREADS.'/active';
-    // GET
     public const CHANNEL_THREADS_ARCHIVED_PUBLIC = self::CHANNEL_THREADS.'/archived/public';
     // GET
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE = self::CHANNEL_THREADS.'/archived/private';
