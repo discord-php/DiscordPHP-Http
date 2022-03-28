@@ -37,7 +37,7 @@ class Http
      *
      * @var string
      */
-    public const VERSION = 'v10.0.0';
+    public const VERSION = 'v10.0.1';
 
     /**
      * Current Discord HTTP API version.
@@ -358,9 +358,10 @@ class Http
                 $deferred->resolve($response);
                 $request->getDeferred()->resolve($data);
             }
-        }, function (Exception $e) use ($request) {
+        }, function (Exception $e) use ($request, $deferred) {
             $this->logger->warning($request.' failed: '.$e->getMessage());
 
+            $deferred->reject($e);
             $request->getDeferred()->reject($e);
         });
 
