@@ -384,7 +384,7 @@ class Endpoint
      * the newly created instance.
      *
      * @param  string   $endpoint
-     * @param  string[] ...$args
+     * @param  string[] $args
      * @return Endpoint
      */
     public static function bind(string $endpoint, ...$args)
