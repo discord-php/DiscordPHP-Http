@@ -3,7 +3,7 @@
 /*
  * This file is a part of the DiscordPHP-Http project.
  *
- * Copyright (c) 2021-present David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2022-present David Cole <david.cole1340@gmail.com>
  *
  * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE file.
@@ -102,6 +102,8 @@ class Endpoint
     public const GUILD = 'guilds/:guild_id';
     // GET, POST, PATCH
     public const GUILD_CHANNELS = self::GUILD.'/channels';
+    // GET
+    public const GUILD_ACTIVE_THREADS = self::GUILD.'/threads/active';
 
     // GET
     public const GUILD_MEMBERS = self::GUILD.'/members';
