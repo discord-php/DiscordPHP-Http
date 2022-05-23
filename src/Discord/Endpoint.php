@@ -103,7 +103,7 @@ class Endpoint
     // GET, POST, PATCH
     public const GUILD_CHANNELS = self::GUILD.'/channels';
     // GET
-    public const GUILD_ACTIVE_THREADS = self::GUILD.'/threads/active';
+    public const GUILD_THREADS_ACTIVE = self::GUILD.'/threads/active';
 
     // GET
     public const GUILD_MEMBERS = self::GUILD.'/members';
