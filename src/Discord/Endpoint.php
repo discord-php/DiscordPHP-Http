@@ -128,6 +128,9 @@ class Endpoint
     // GET, POST, PATCH, DELETE
     public const GUILD_ROLE = self::GUILD.'/roles/:role_id';
 
+    // POST
+    public const GUILD_MFA = self::GUILD.'/mfa';
+
     // GET, POST
     public const GUILD_INVITES = self::GUILD.'/invites';
 
