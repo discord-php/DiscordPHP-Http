@@ -206,7 +206,7 @@ class Endpoint
     // GET, POST
     public const GUILD_AUTO_MODERATION_RULES = self::GUILD.'/auto-moderation/rules';
     // GET, PATCH, DELETE
-    public const GUILD_AUTO_MODERATION_RULE = self::GUILD.'/:auto_moderation_rule_id';
+    public const GUILD_AUTO_MODERATION_RULE = self::GUILD.'/auto-moderation/rules/:auto_moderation_rule_id';
 
     // GET, PATCH
     public const USER_CURRENT = 'users/@me';
