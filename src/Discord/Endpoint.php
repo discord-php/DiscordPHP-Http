@@ -203,6 +203,11 @@ class Endpoint
     // PUT, PATCH, DELETE
     public const GUILD_TEMPLATE = self::GUILD.'/templates/:template_code';
 
+    // GET, POST
+    public const GUILD_AUTO_MODERATION_RULES = self::GUILD.'/auto-moderation/rules';
+    // GET, PATCH, DELETE
+    public const GUILD_AUTO_MODERATION_RULE = self::GUILD.'/auto-moderation/rules/:auto_moderation_rule_id';
+
     // GET, PATCH
     public const USER_CURRENT = 'users/@me';
     // GET
