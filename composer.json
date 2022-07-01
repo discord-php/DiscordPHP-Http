@@ -22,6 +22,7 @@
     "require-dev": {
         "monolog/monolog": "^2.2",
         "friendsofphp/php-cs-fixer": "^2.17",
-        "psy/psysh": "^0.10.6"
+        "psy/psysh": "^0.10.6",
+        "guzzlehttp/guzzle": "^6.0|^7.0"
     }
 }
