@@ -14,15 +14,13 @@ namespace Discord\Http\Drivers;
 use Discord\Http\DriverInterface;
 use Discord\Http\Request;
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise\TaskQueueInterface;
-use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * guzzlehttp/guzzle driver for Discord HTTP client. (still with React Event Loop/Promise)
+ * guzzlehttp/guzzle driver for Discord HTTP client. (still with React Promise)
  *
  * @author SQKo
  */
@@ -31,7 +29,7 @@ class Guzzle implements DriverInterface
     /**
      * ReactPHP event loop.
      *
-     * @var LoopInterface
+     * @var LoopInterface|null
      */
     protected $loop;
 
@@ -43,54 +41,37 @@ class Guzzle implements DriverInterface
     protected $client;
 
     /**
-     * GuzzleHTTP/Promise global queue.
-     *
-     * @var TaskQueueInterface
-     */
-    protected $queue;
-
-    /**
-     * A single mark set on the run.
-     *
-     * @var bool
-     */
-    protected $isRun = false;
-
-    /**
      * Constructs the Guzzle driver.
      *
-     * @param array $options
+     * @param LoopInterface|null $loop
+     * @param array              $options
      */
-    public function __construct(LoopInterface $loop, array $options = [])
+    public function __construct(?LoopInterface $loop = null, array $options = [])
     {
         $this->loop = $loop;
 
         // Allow 400 and 500 HTTP requests to be resolved rather than rejected.
         $options['http_errors'] = false;
         $this->client = new Client($options);
-
-        $this->queue = Utils::queue();
     }
 
     public function runRequest(Request $request): ExtendedPromiseInterface
     {
         // Create a React promise
         $deferred = new Deferred();
-        $promise = $deferred->promise();
+        $reactPromise = $deferred->promise();
 
-        $this->client->requestAsync($request->getMethod(), $request->getUrl(), [
+        $promise = $this->client->requestAsync($request->getMethod(), $request->getUrl(), [
                 RequestOptions::HEADERS => $request->getHeaders(),
                 RequestOptions::BODY => $request->getContent(),
-            ])->then([
-                $promise => 'resolve',
-                $promise => 'reject'
-            ]);
+            ])->then([$deferred, 'resolve'], [$deferred, 'reject']);
 
-        if (! $this->isRun) {
-            $this->loop->addPeriodicTimer(0, \Closure::fromCallable([$this->queue, 'run']));
-            $this->isRun = true;
+        if ($this->loop) {
+            $this->loop->futureTick([$promise, 'wait']);
+        } else {
+            $promise->wait();
         }
 
-        return $promise;
+        return $reactPromise;
     }
 }
