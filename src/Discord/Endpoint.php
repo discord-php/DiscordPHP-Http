@@ -327,11 +327,15 @@ class Endpoint
     /**
      * Adds a key-value query pair to the endpoint.
      *
-     * @param string $key
-     * @param string $value
+     * @param string      $key
+     * @param string|bool $value
      */
-    public function addQuery(string $key, string $value): void
+    public function addQuery(string $key, $value): void
     {
+        if (! is_bool($value)) {
+            $value = (string) $value;
+        }
+
         $this->query[$key] = $value;
     }
     
