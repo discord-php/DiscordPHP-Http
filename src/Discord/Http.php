@@ -22,6 +22,7 @@ use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Promise\ExtendedPromiseInterface;
+use RuntimeException;
 use SplQueue;
 use Throwable;
 
@@ -37,7 +38,7 @@ class Http
      *
      * @var string
      */
-    public const VERSION = 'v10.1.1';
+    public const VERSION = 'v10.1.2';
 
     /**
      * Current Discord HTTP API version.
@@ -316,6 +317,32 @@ class Http
 
             // Discord Rate-limit
             if ($statusCode == 429) {
+                if (! isset($data->global)) {
+                    if ($response->hasHeader('X-RateLimit-Global')) {
+                        $data->global = $response->getHeader('X-RateLimit-Global')[0] == true;
+                    } else {
+                        // Some other 429
+                        $this->logger->error($request. ' does not contain global rate-limit value');
+                        $rateLimitError = new RuntimeException('No rate limit global response', $statusCode);
+                        $deferred->reject($rateLimitError);
+                        $request->getDeferred()->reject($rateLimitError);
+                        return;
+                    }
+                }
+
+                if (! isset($data->retry_after)) {
+                    if ($response->hasHeader('Retry-After')) {
+                        $data->retry_after = $response->getHeader('Retry-After')[0];
+                    } else {
+                        // Some other 429
+                        $this->logger->error($request. ' does not contain retry after rate-limit value');
+                        $rateLimitError = new RuntimeException('No rate limit retry after response', $statusCode);
+                        $deferred->reject($rateLimitError);
+                        $request->getDeferred()->reject($rateLimitError);
+                        return;
+                    }
+                }
+
                 $rateLimit = new RateLimit($data->global, $data->retry_after);
                 $this->logger->warning($request.' hit rate-limit: '.$rateLimit);
 
