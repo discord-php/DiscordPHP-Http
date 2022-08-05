@@ -38,7 +38,7 @@ class Http
      *
      * @var string
      */
-    public const VERSION = 'v10.1.2';
+    public const VERSION = 'v10.1.3';
 
     /**
      * Current Discord HTTP API version.
@@ -319,7 +319,7 @@ class Http
             if ($statusCode == 429) {
                 if (! isset($data->global)) {
                     if ($response->hasHeader('X-RateLimit-Global')) {
-                        $data->global = $response->getHeader('X-RateLimit-Global')[0] == true;
+                        $data->global = $response->getHeader('X-RateLimit-Global')[0] == 'true';
                     } else {
                         // Some other 429
                         $this->logger->error($request. ' does not contain global rate-limit value');
