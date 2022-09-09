@@ -470,28 +470,32 @@ class Http
     {
         $reason = $response->getReasonPhrase().' - ';
 
+        $errorBody = (string) $response->getBody();
+        $errorCode = 0;
+
         // attempt to prettyify the response content
-        if (($content = json_decode((string) $response->getBody())) !== null) {
+        if (($content = json_decode($errorBody)) !== null) {
+            $errorCode = $content->code ?? 0;
             $reason .= json_encode($content, JSON_PRETTY_PRINT);
         } else {
-            $reason .= (string) $response->getBody();
+            $reason .= $errorBody;
         }
 
         switch ($response->getStatusCode()) {
             case 401:
-                return new InvalidTokenException($reason);
+                return new InvalidTokenException($reason, $errorCode);
             case 403:
-                return new NoPermissionsException($reason);
+                return new NoPermissionsException($reason, $errorCode);
             case 404:
-                return new NotFoundException($reason);
+                return new NotFoundException($reason, $errorCode);
             case 500:
-                if (strpos(strtolower((string) $response->getBody()), 'longer than 2000 characters') !== false ||
-                    strpos(strtolower((string) $response->getBody()), 'string value is too long') !== false) {
+                if (strpos(strtolower($errorBody), 'longer than 2000 characters') !== false ||
+                    strpos(strtolower($errorBody), 'string value is too long') !== false) {
                     // Response was longer than 2000 characters and was blocked by Discord.
                     return new ContentTooLongException('Response was more than 2000 characters. Use another method to get this data.');
                 }
             default:
-                return new RequestFailedException($reason);
+                return new RequestFailedException($reason, $errorCode);
         }
     }
 
