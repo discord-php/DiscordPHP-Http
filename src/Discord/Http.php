@@ -475,7 +475,7 @@ class Http
 
         // attempt to prettyify the response content
         if (($content = json_decode($errorBody)) !== null) {
-            $errorCode = $content->code ?? 0;
+            $errorCode = $content->code ?? $response->getStatusCode();
             $reason .= json_encode($content, JSON_PRETTY_PRINT);
         } else {
             $reason .= $errorBody;
@@ -492,7 +492,7 @@ class Http
                 if (strpos(strtolower($errorBody), 'longer than 2000 characters') !== false ||
                     strpos(strtolower($errorBody), 'string value is too long') !== false) {
                     // Response was longer than 2000 characters and was blocked by Discord.
-                    return new ContentTooLongException('Response was more than 2000 characters. Use another method to get this data.');
+                    return new ContentTooLongException('Response was more than 2000 characters. Use another method to get this data.', $errorCode);
                 }
             default:
                 return new RequestFailedException($reason, $errorCode);
