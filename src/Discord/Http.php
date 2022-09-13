@@ -471,11 +471,13 @@ class Http
         $reason = $response->getReasonPhrase().' - ';
 
         $errorBody = (string) $response->getBody();
-        $errorCode = 0;
+        $errorCode = $response->getStatusCode();
 
         // attempt to prettyify the response content
         if (($content = json_decode($errorBody)) !== null) {
-            $errorCode = $content->code ?? $response->getStatusCode();
+            if (isset($content->code)) {
+                $errorCode = $content->code;
+            }
             $reason .= json_encode($content, JSON_PRETTY_PRINT);
         } else {
             $reason .= $errorBody;
