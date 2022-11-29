@@ -127,7 +127,11 @@ class Bucket
         $checkQueue = function () use (&$checkQueue) {
             // Check for rate-limits
             if ($this->requestRemaining < 1 && ! is_null($this->requestRemaining)) {
-                $this->logger->info($this.' expecting rate limit, timer interval '.(($this->resetTimer->getInterval() ?? 0) * 1000).' ms');
+                $interval = 0;
+                if ($this->resetTimer) {
+                    $interval = $this->resetTimer->getInterval() ?? 0;
+                }
+                $this->logger->info($this.' expecting rate limit, timer interval '.($interval * 1000).' ms');
                 $this->checkerRunning = false;
 
                 return;
