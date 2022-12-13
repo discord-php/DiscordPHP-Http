@@ -5,3 +5,4 @@ test.php
 .php_cs
 .php-cs-fixer.php
 .php-cs-fixer.cache
+.vscode
