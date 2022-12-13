@@ -238,6 +238,9 @@ class Endpoint
     // PATCH, DELETE
     public const WEBHOOK_MESSAGE = self::WEBHOOK_TOKEN.'/messages/:message_id';
 
+    // GET, PUT
+    public const APPLICATION_ROLE_CONNECTION_METADATA = 'applications/:application_id/role-connections/metadata';
+
     /**
      * Regex to identify parameters in endpoints.
      *
