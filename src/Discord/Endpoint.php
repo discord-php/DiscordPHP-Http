@@ -238,6 +238,9 @@ class Endpoint
     // PATCH, DELETE
     public const WEBHOOK_MESSAGE = self::WEBHOOK_TOKEN.'/messages/:message_id';
 
+    // GET, PUT
+    public const APPLICATION_ROLE_CONNECTION_METADATA = 'applications/:application_id/role-connections/metadata';
+
     /**
      * Regex to identify parameters in endpoints.
      *
@@ -290,7 +293,7 @@ class Endpoint
     public function __construct(string $endpoint)
     {
         $this->endpoint = $endpoint;
-    
+
         if (preg_match_all(self::REGEX, $endpoint, $vars)) {
             $this->vars = $vars[1] ?? [];
         }
@@ -338,7 +341,7 @@ class Endpoint
 
         $this->query[$key] = $value;
     }
-    
+
     /**
      * Converts the endpoint into the absolute endpoint with
      * placeholders replaced.
@@ -391,7 +394,7 @@ class Endpoint
     {
         $endpoint = new Endpoint($endpoint);
         $endpoint->bindArgs(...$args);
-        
+
         return $endpoint;
     }
 
