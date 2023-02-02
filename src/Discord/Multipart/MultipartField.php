@@ -27,10 +27,10 @@ class MultipartField
         array $headers = [],
         ?string $fileName = null
     ) {
-        $this->$name = $name;
-        $this->$content = $content;
-        $this->$headers = $headers;
-        $this->$fileName = $fileName;
+        $this->name = $name;
+        $this->content = $content;
+        $this->headers = $headers;
+        $this->fileName = $fileName;
     }
 
     public function __toString(): string

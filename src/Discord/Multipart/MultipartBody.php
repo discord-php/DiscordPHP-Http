@@ -18,7 +18,7 @@ class MultipartBody
     public const BOUNDARY_PREFIX = 'DISCORDPHP-HTTP-BOUNDARY';
 
     private array $fields;
-    private string $boundary;
+    public string $boundary;
 
     private function createBoundary(): string
     {
