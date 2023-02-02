@@ -17,6 +17,9 @@ class MultipartBody
 {
     public const BOUNDARY_PREFIX = 'DISCORDPHP-HTTP-BOUNDARY';
 
+    private array $fields;
+    private string $boundary;
+
     private function createBoundary(): string
     {
         return self::BOUNDARY_PREFIX.'-'.strtoupper((string) Uuid::uuid1());
@@ -25,9 +28,10 @@ class MultipartBody
     /**
      * @var MultipartField[]
      */
-    public function __construct(private array $fields, public ?string $boundary = null)
+    public function __construct(array $fields, ?string $boundary = null)
     {
-        $this->boundary = $this->boundary ?? $this->createBoundary();
+        $this->fields = $fields;
+        $this->boundary = $boundary ?? $this->createBoundary();
     }
 
     public function __toString(): string

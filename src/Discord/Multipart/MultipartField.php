@@ -13,15 +13,24 @@ namespace Discord\Http\Multipart;
 
 class MultipartField
 {
+    private string $name;
+    private string $content;
+    private array $headers;
+    private ?string $fileName;
+
     /**
      * @var String[]
      */
     public function __construct(
-        private string $name,
-        private string $content,
-        private array $headers = [],
-        private ?string $fileName = null
+        string $name,
+        string $content,
+        array $headers = [],
+        ?string $fileName = null
     ) {
+        $this->$name = $name;
+        $this->$content = $content;
+        $this->$headers = $headers;
+        $this->$fileName = $fileName;
     }
 
     public function __toString(): string
