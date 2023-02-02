@@ -11,13 +11,15 @@
     ],
     "autoload": {
         "psr-4": {
-            "Discord\\Http\\": "src/Discord"
+            "Discord\\Http\\": "src/Discord",
+            "Tests\\Discord\\Http\\": "tests/Discord"
         }
     },
     "require": {
         "php": "^7.2|^8.0",
         "react/http": "^1.2",
-        "psr/log": "^1.1 || ^2.0 || ^3.0"
+        "psr/log": "^1.1 || ^2.0 || ^3.0",
+        "ramsey/uuid": "^4.7"
     },
     "suggest": {
         "guzzlehttp/guzzle": "For alternative to ReactPHP/Http Browser"
@@ -26,6 +28,13 @@
         "monolog/monolog": "^2.2",
         "friendsofphp/php-cs-fixer": "^2.17",
         "psy/psysh": "^0.10.6",
-        "guzzlehttp/guzzle": "^6.0|^7.0"
+        "guzzlehttp/guzzle": "^6.0|^7.0",
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.5"
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit",
+        "test-coverage": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-text",
+        "test-coverage-html": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-html .phpunit.cache/cov-html"
     }
 }

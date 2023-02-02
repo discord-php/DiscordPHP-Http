@@ -4,7 +4,7 @@ Asynchronous HTTP client used for communication with the Discord REST API.
 
 ## Requirements
 
-- PHP >=7.2
+- PHP >=8
 
 ## Installation
 

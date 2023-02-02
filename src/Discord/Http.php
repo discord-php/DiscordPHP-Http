@@ -16,6 +16,7 @@ use Discord\Http\Exceptions\InvalidTokenException;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Http\Exceptions\NotFoundException;
 use Discord\Http\Exceptions\RequestFailedException;
+use Discord\Http\Multipart\MultipartBody;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -274,13 +275,11 @@ class Http
             'X-Ratelimit-Precision' => 'millisecond',
         ];
 
-        // If there is content and Content-Type is not set,
-        // assume it is JSON.
         if (! is_null($content) && ! isset($headers['Content-Type'])) {
-            $content = json_encode($content);
-
-            $baseHeaders['Content-Type'] = 'application/json';
-            $baseHeaders['Content-Length'] = strlen($content);
+            $baseHeaders = array_merge(
+                $baseHeaders,
+                $this->guessContent($content)
+            );
         }
 
         $headers = array_merge($baseHeaders, $headers);
@@ -289,6 +288,28 @@ class Http
         $this->sortIntoBucket($request);
 
         return $deferred->promise();
+    }
+
+    /**
+     * Guesses the headers and transforms the content of a request.
+     *
+     * @param mixed $content
+     */
+    protected function guessContent(&$content)
+    {
+        if ($content instanceof MultipartBody) {
+            $headers = $content->getHeaders();
+            $content = (string) $content;
+
+            return $headers;
+        }
+
+        $content = json_encode($content);
+
+        return [
+            'Content-Type' => 'application/json',
+            'Content-Length' => strlen($content),
+        ];
     }
 
     /**
@@ -322,10 +343,11 @@ class Http
                         $data->global = $response->getHeader('X-RateLimit-Global')[0] == 'true';
                     } else {
                         // Some other 429
-                        $this->logger->error($request. ' does not contain global rate-limit value');
+                        $this->logger->error($request.' does not contain global rate-limit value');
                         $rateLimitError = new RuntimeException('No rate limit global response', $statusCode);
                         $deferred->reject($rateLimitError);
                         $request->getDeferred()->reject($rateLimitError);
+
                         return;
                     }
                 }
@@ -335,10 +357,11 @@ class Http
                         $data->retry_after = $response->getHeader('Retry-After')[0];
                     } else {
                         // Some other 429
-                        $this->logger->error($request. ' does not contain retry after rate-limit value');
+                        $this->logger->error($request.' does not contain retry after rate-limit value');
                         $rateLimitError = new RuntimeException('No rate limit retry after response', $statusCode);
                         $deferred->reject($rateLimitError);
                         $request->getDeferred()->reject($rateLimitError);
+
                         return;
                     }
                 }
@@ -438,6 +461,7 @@ class Http
     {
         if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) {
             $this->logger->debug('http not checking', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
+
             return;
         }
 
