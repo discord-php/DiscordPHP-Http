@@ -11,19 +11,12 @@
 
 namespace Discord\Http\Multipart;
 
-use Ramsey\Uuid\Uuid;
-
 class MultipartBody
 {
-    public const BOUNDARY_PREFIX = 'DISCORDPHP-HTTP-BOUNDARY';
+    public const BOUNDARY = 'DISCORDPHP-HTTP-BOUNDARY';
 
     private array $fields;
     public string $boundary;
-
-    private function createBoundary(): string
-    {
-        return self::BOUNDARY_PREFIX.'-'.strtoupper((string) Uuid::uuid1());
-    }
 
     /**
      * @var MultipartField[]
@@ -31,7 +24,7 @@ class MultipartBody
     public function __construct(array $fields, ?string $boundary = null)
     {
         $this->fields = $fields;
-        $this->boundary = $boundary ?? $this->createBoundary();
+        $this->boundary = $boundary ?? self::BOUNDARY;
     }
 
     public function __toString(): string
