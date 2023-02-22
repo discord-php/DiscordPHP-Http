@@ -20,7 +20,7 @@ use React\Promise\Deferred;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * guzzlehttp/guzzle driver for Discord HTTP client. (still with React Promise)
+ * guzzlehttp/guzzle driver for Discord HTTP client. (still with React Promise).
  *
  * @author SQKo
  */
