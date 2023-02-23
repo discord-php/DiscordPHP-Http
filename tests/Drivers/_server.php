@@ -1,8 +1,5 @@
 <?php
 
-// $ composer require react/http react/socket # install example using Composer
-// $ php example.php # run example on command line, requires no additional web server
-
 use React\Http\HttpServer;
 use React\Http\Message\Response;
 use React\Socket\SocketServer;
