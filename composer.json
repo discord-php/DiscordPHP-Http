@@ -29,7 +29,8 @@
         "psy/psysh": "^0.10.6",
         "guzzlehttp/guzzle": "^6.0|^7.0",
         "phpunit/phpunit": "^9.5",
-        "mockery/mockery": "^1.5"
+        "mockery/mockery": "^1.5",
+        "react/async": "^4 || ^3"
     },
     "scripts": {
         "test": "./vendor/bin/phpunit",
