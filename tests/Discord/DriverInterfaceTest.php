@@ -7,7 +7,6 @@ use Discord\Http\Request;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-
 use function React\Async\await;
 
 abstract class DriverInterfaceTest extends TestCase
@@ -42,7 +41,7 @@ abstract class DriverInterfaceTest extends TestCase
             $method,
             $url,
             $content === [] ? '' : json_encode($content),
-            empty($content) ? [] : ['Content-Type' => 'Application/Json']
+            empty($content) ? [] : ['Content-Type' => 'application/json']
         );
 
         /** @var ResponseInterface */
@@ -52,6 +51,9 @@ abstract class DriverInterfaceTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
 
         $jsonDecodedBody = json_decode($response->getBody(), true);
+
+        $verify['method'] = $method;
+
         foreach ($verify as $field => $expectedValue) {
             $this->assertEquals(
                 $expectedValue,
@@ -66,11 +68,11 @@ abstract class DriverInterfaceTest extends TestCase
         return [
             'Plain get' => [
                 'method' => 'GET',
-                'url' => 'https://postman-echo.com/get',
+                'url' => 'http://127.0.0.1:8888',
             ],
             'Get with params' => [
                 'method' => 'GET',
-                'url' => 'https://postman-echo.com/get?something=value',
+                'url' => 'http://127.0.0.1:8888?something=value',
                 'verify' => [
                     'args' => ['something' => 'value'],
                 ],
@@ -78,11 +80,11 @@ abstract class DriverInterfaceTest extends TestCase
 
             'Plain post' => [
                 'method' => 'POST',
-                'url' => 'https://postman-echo.com/post',
+                'url' => 'http://127.0.0.1:8888',
             ],
             'Post with content' => [
                 'method' => 'POST',
-                'url' => 'https://postman-echo.com/post',
+                'url' => 'http://127.0.0.1:8888',
                 'content' => $content,
                 'verify' => [
                     'json' => $content,
@@ -91,11 +93,11 @@ abstract class DriverInterfaceTest extends TestCase
 
             'Plain put' => [
                 'method' => 'PUT',
-                'url' => 'https://postman-echo.com/put',
+                'url' => 'http://127.0.0.1:8888',
             ],
             'Put with content' => [
                 'method' => 'PUT',
-                'url' => 'https://postman-echo.com/put',
+                'url' => 'http://127.0.0.1:8888',
                 'content' => $content,
                 'verify' => [
                     'json' => $content,
@@ -104,11 +106,11 @@ abstract class DriverInterfaceTest extends TestCase
 
             'Plain patch' => [
                 'method' => 'PATCH',
-                'url' => 'https://postman-echo.com/patch',
+                'url' => 'http://127.0.0.1:8888',
             ],
             'Patch with content' => [
                 'method' => 'PATCH',
-                'url' => 'https://postman-echo.com/patch',
+                'url' => 'http://127.0.0.1:8888',
                 'content' => $content,
                 'verify' => [
                     'json' => $content,
@@ -117,11 +119,11 @@ abstract class DriverInterfaceTest extends TestCase
 
             'Plain delete' => [
                 'method' => 'DELETE',
-                'url' => 'https://postman-echo.com/delete',
+                'url' => 'http://127.0.0.1:8888',
             ],
             'Delete with content' => [
                 'method' => 'DELETE',
-                'url' => 'https://postman-echo.com/delete',
+                'url' => 'http://127.0.0.1:8888',
                 'content' => $content,
                 'verify' => [
                     'json' => $content,
