@@ -104,7 +104,7 @@ class EndpointTest extends TestCase
             // 'Params with same prefix, short first' => [
             //     'uri' => 'something/:thing_other/:thing',
             //     'replacements' => ['::thing other::', '::thing::'],
-            //     'expected' => 'something/::thing::/::thing other::',
+            //     'expected' => 'something/::thing other::/::thing::',
             // ],
         ];
     }
