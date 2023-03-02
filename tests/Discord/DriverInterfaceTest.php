@@ -74,7 +74,7 @@ abstract class DriverInterfaceTest extends TestCase
                 'method' => 'GET',
                 'url' => 'http://127.0.0.1:8888?something=value',
                 'verify' => [
-                    'args' => ['something' => 'value'],
+                    'args' => $content,
                 ],
             ],
 
