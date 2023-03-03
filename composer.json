@@ -29,11 +29,14 @@
         "psy/psysh": "^0.10.6",
         "guzzlehttp/guzzle": "^6.0|^7.0",
         "phpunit/phpunit": "^9.5",
-        "mockery/mockery": "^1.5"
+        "mockery/mockery": "^1.5",
+        "react/async": "^4 || ^3"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit",
-        "test-coverage": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-text",
-        "test-coverage-html": "php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-html .phpunit.cache/cov-html"
+        "test": "php tests/Drivers/_server.php& HTTP_SERVER_PID=$!; ./vendor/bin/phpunit; kill $HTTP_SERVER_PID;",
+        "test-discord": "./vendor/bin/phpunit --testsuite Discord",
+        "test-drivers": "php tests/Drivers/_server.php& HTTP_SERVER_PID=$!; ./vendor/bin/phpunit --testsuite Drivers; kill $HTTP_SERVER_PID;",
+        "test-coverage": "php tests/Drivers/_server.php& HTTP_SERVER_PID=$!; php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-text; kill $HTTP_SERVER_PID;",
+        "test-coverage-html": "php tests/Drivers/_server.php& HTTP_SERVER_PID=$!; php -d xdebug.mode=coverage ./vendor/bin/phpunit --coverage-html .phpunit.cache/cov-html; kill $HTTP_SERVER_PID;"
     }
 }

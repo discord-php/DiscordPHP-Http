@@ -16,6 +16,10 @@
         <testsuite name="Discord">
             <directory>tests/Discord</directory>
         </testsuite>
+
+        <testsuite name="Drivers">
+            <directory>tests/Drivers</directory>
+        </testsuite>
     </testsuites>
 
     <coverage cacheDirectory=".phpunit.cache/code-coverage"
