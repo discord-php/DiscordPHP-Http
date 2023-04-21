@@ -133,6 +133,7 @@ class Bucket
                 }
                 $this->logger->info($this.' expecting rate limit, timer interval '.($interval * 1000).' ms');
                 $this->checkerRunning = false;
+                $checkQueue = null;
 
                 return;
             }
@@ -140,6 +141,7 @@ class Bucket
             // Queue is empty, job done.
             if ($this->queue->isEmpty()) {
                 $this->checkerRunning = false;
+                $checkQueue = null;
 
                 return;
             }
@@ -191,6 +193,8 @@ class Bucket
                     // Will be restarted when global rate-limit finished.
                     else {
                         $this->checkerRunning = false;
+                        $checkQueue = null;
+
                         $this->logger->debug($this.' stopping queue checker');
                     }
                 } else {
