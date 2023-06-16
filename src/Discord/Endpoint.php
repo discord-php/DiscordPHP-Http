@@ -160,6 +160,8 @@ class Endpoint
     public const GUILD_WIDGET_IMAGE = self::GUILD.'/widget.png';
     // GET, PATCH
     public const GUILD_WELCOME_SCREEN = self::GUILD.'/welcome-screen';
+    // GET
+    public const GUILD_ONBOARDING = self::GUILD.'/onboarding';
     // PATCH
     public const GUILD_USER_CURRENT_VOICE_STATE = self::GUILD.'/voice-states/@me';
     // PATCH
