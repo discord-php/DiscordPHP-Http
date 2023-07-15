@@ -227,7 +227,7 @@ class Endpoint
     // GET, PUT
     public const USER_CURRENT_APPLICATION_ROLE_CONNECTION = self::USER_CURRENT.'/applications/:application_id/role-connection';
     // GET
-    public const APPLICATION_CURRENT = 'oauth2/applications/@me';
+    public const APPLICATION_CURRENT = 'applications/@me';
 
     // GET, PATCH, DELETE
     public const WEBHOOK = 'webhooks/:webhook_id';
