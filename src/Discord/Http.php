@@ -11,21 +11,21 @@
 
 namespace Discord\Http;
 
+use Discord\Http\Exceptions\BadRequestException;
 use Discord\Http\Exceptions\ContentTooLongException;
 use Discord\Http\Exceptions\InvalidTokenException;
+use Discord\Http\Exceptions\MethodNotAllowedException;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Http\Exceptions\NotFoundException;
+use Discord\Http\Exceptions\RateLimitException;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Http\Multipart\MultipartBody;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-use RuntimeException;
 use SplQueue;
-use Throwable;
 
 /**
  * Discord HTTP client.
@@ -39,7 +39,7 @@ class Http
      *
      * @var string
      */
-    public const VERSION = 'v10.2.3';
+    public const VERSION = 'v10.3.0';
 
     /**
      * Current Discord HTTP API version.
@@ -344,7 +344,7 @@ class Http
                     } else {
                         // Some other 429
                         $this->logger->error($request.' does not contain global rate-limit value');
-                        $rateLimitError = new RuntimeException('No rate limit global response', $statusCode);
+                        $rateLimitError = new RateLimitException('No rate limit global response', $statusCode);
                         $deferred->reject($rateLimitError);
                         $request->getDeferred()->reject($rateLimitError);
 
@@ -358,7 +358,7 @@ class Http
                     } else {
                         // Some other 429
                         $this->logger->error($request.' does not contain retry after rate-limit value');
-                        $rateLimitError = new RuntimeException('No rate limit retry after response', $statusCode);
+                        $rateLimitError = new RateLimitException('No rate limit retry after response', $statusCode);
                         $deferred->reject($rateLimitError);
                         $request->getDeferred()->reject($rateLimitError);
 
@@ -408,7 +408,7 @@ class Http
                 $deferred->resolve($response);
                 $request->getDeferred()->resolve($data);
             }
-        }, function (Exception $e) use ($request, $deferred) {
+        }, function (\Exception $e) use ($request, $deferred) {
             $this->logger->warning($request.' failed: '.$e->getMessage());
 
             $deferred->reject($e);
@@ -488,9 +488,9 @@ class Http
      *
      * @param ResponseInterface $response
      *
-     * @return Throwable
+     * @return \Throwable
      */
-    public function handleError(ResponseInterface $response): Throwable
+    public function handleError(ResponseInterface $response): \Throwable
     {
         $reason = $response->getReasonPhrase().' - ';
 
@@ -499,7 +499,7 @@ class Http
 
         // attempt to prettyify the response content
         if (($content = json_decode($errorBody)) !== null) {
-            if (isset($content->code)) {
+            if (! empty($content->code)) {
                 $errorCode = $content->code;
             }
             $reason .= json_encode($content, JSON_PRETTY_PRINT);
@@ -508,12 +508,16 @@ class Http
         }
 
         switch ($response->getStatusCode()) {
+            case 400:
+                return new BadRequestException($reason, $errorCode);
             case 401:
                 return new InvalidTokenException($reason, $errorCode);
             case 403:
                 return new NoPermissionsException($reason, $errorCode);
             case 404:
                 return new NotFoundException($reason, $errorCode);
+            case 405:
+                return new MethodNotAllowedException($reason, $errorCode);
             case 500:
                 if (strpos(strtolower($errorBody), 'longer than 2000 characters') !== false ||
                     strpos(strtolower($errorBody), 'string value is too long') !== false) {
