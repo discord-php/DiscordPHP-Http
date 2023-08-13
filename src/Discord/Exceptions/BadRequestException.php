@@ -12,11 +12,11 @@
 namespace Discord\Http\Exceptions;
 
 /**
- * Thrown when you do not have permissions to do something.
+ * Thrown when a request to Discord's REST API returned ClientErrorResponse.
  *
- * @author David Cole <david.cole1340@gmail.com>
+ * @author SQKo
  */
-class NoPermissionsException extends RequestFailedException
+class BadRequestException extends RequestFailedException
 {
-    protected $code = 403;
+    protected $code = 400;
 }

@@ -12,11 +12,12 @@
 namespace Discord\Http\Exceptions;
 
 /**
- * Thrown when you do not have permissions to do something.
+ * Thrown when a request to Discord's REST API got rate limited and the library
+ * does not know how to handle.
  *
- * @author David Cole <david.cole1340@gmail.com>
+ * @author SQKo
  */
-class NoPermissionsException extends RequestFailedException
+class RateLimitException extends RequestFailedException
 {
-    protected $code = 403;
+    protected $code = 429;
 }
