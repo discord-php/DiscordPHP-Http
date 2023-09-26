@@ -18,6 +18,8 @@ class Endpoint
     // GET
     public const GATEWAY_BOT = self::GATEWAY.'/bot';
 
+    // GET
+    public const APPLICATION_SKUS = 'applications/:application_id/skus';
     // GET, POST, PUT
     public const GLOBAL_APPLICATION_COMMANDS = 'applications/:application_id/commands';
     // GET, PATCH, DELETE
