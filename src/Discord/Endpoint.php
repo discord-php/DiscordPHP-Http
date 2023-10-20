@@ -251,6 +251,13 @@ class Endpoint
     // GET, PUT
     public const APPLICATION_ROLE_CONNECTION_METADATA = 'applications/:application_id/role-connections/metadata';
 
+    // GET
+    public const APPLICATION_LIST_ENTITLEMENTS = 'applications/:application_id/entitlements';
+    // POST
+    public const APPLICATION_CREATE_TEST_ENTITLEMENTS = self::APPLICATION_LIST_ENTITLEMENTS;
+    // DELETE
+    public const APPLICATION_DELETE_TEST_ENTITLEMENTS = self::APPLICATION_LIST_ENTITLEMENTS.'/:entitlement_id';
+    
     /**
      * Regex to identify parameters in endpoints.
      *
