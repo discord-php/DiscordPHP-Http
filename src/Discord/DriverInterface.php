@@ -12,7 +12,7 @@
 namespace Discord\Http;
 
 use Psr\Http\Message\ResponseInterface;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * Interface for an HTTP driver.
@@ -28,7 +28,7 @@ interface DriverInterface
      *
      * @param Request $request
      *
-     * @return ExtendedPromiseInterface<ResponseInterface>
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill<ResponseInterface>|\React\Promise\ExtendedPromiseInterface<ResponseInterface>
      */
-    public function runRequest(Request $request): ExtendedPromiseInterface;
+    public function runRequest(Request $request): PromiseInterface;
 }

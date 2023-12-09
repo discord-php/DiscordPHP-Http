@@ -19,12 +19,12 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Http\Exceptions\NotFoundException;
 use Discord\Http\Exceptions\RateLimitException;
 use Discord\Http\Exceptions\RequestFailedException;
+use Discord\Http\PromiseHelpers\Deferred;
 use Discord\Http\Multipart\MultipartBody;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
-use React\Promise\Deferred;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use SplQueue;
 
 /**
@@ -39,7 +39,7 @@ class Http
      *
      * @var string
      */
-    public const VERSION = 'v10.3.0';
+    public const VERSION = 'v10.4.0';
 
     /**
      * Current Discord HTTP API version.
@@ -160,9 +160,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill|\React\Promise\ExtendedPromiseInterface
      */
-    public function get($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function get($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -178,9 +178,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill|\React\Promise\ExtendedPromiseInterface
      */
-    public function post($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function post($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -196,9 +196,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill|\React\Promise\ExtendedPromiseInterface
      */
-    public function put($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function put($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -214,9 +214,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill|\React\Promise\ExtendedPromiseInterface
      */
-    public function patch($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function patch($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -232,9 +232,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill|\React\Promise\ExtendedPromiseInterface
      */
-    public function delete($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function delete($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -251,9 +251,9 @@ class Http
      * @param mixed    $content
      * @param array    $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill|\React\Promise\ExtendedPromiseInterface
      */
-    public function queueRequest(string $method, Endpoint $url, $content, array $headers = []): ExtendedPromiseInterface
+    public function queueRequest(string $method, Endpoint $url, $content, array $headers = []): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -318,16 +318,16 @@ class Http
      * @param Request  $request
      * @param Deferred $deferred
      *
-     * @return ExtendedPromiseInterface
+     * @return \Discord\Http\PromiseHelpers\PromiseInterfacePolyFill|\React\Promise\ExtendedPromiseInterface
      */
-    protected function executeRequest(Request $request, Deferred $deferred = null): ExtendedPromiseInterface
+    protected function executeRequest(Request $request, Deferred $deferred = null): PromiseInterface
     {
         if ($deferred === null) {
             $deferred = new Deferred();
         }
 
         if ($this->rateLimit) {
-            $deferred->reject($this->rateLimit);
+            $deferred->reject($this->rateLimit); // TODO handle resolve ratelimit
 
             return $deferred->promise();
         }
@@ -383,7 +383,7 @@ class Http
                     });
                 }
 
-                $deferred->reject($rateLimit->isGlobal() ? $this->rateLimit : $rateLimit);
+                $deferred->reject($rateLimit->isGlobal() ? $this->rateLimit : $rateLimit); // TODO handle resolve ratelimit
             }
             // Bad Gateway
             // Cloudflare SSL Handshake error
@@ -476,7 +476,7 @@ class Http
             --$this->waiting;
             $this->checkQueue();
             $deferred->resolve($result);
-        }, function ($e) use ($deferred) {
+        }, function ($e) use ($deferred) {  // TODO handle resolve reject
             --$this->waiting;
             $this->checkQueue();
             $deferred->reject($e);
