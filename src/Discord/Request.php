@@ -11,7 +11,7 @@
 
 namespace Discord\Http;
 
-use React\Promise\Deferred;
+use Discord\Http\PromiseHelpers\Deferred;
 
 /**
  * Represents an HTTP request.
