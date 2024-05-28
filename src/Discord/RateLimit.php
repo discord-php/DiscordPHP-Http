@@ -11,12 +11,14 @@
 
 namespace Discord\Http;
 
+use RuntimeException;
+
 /**
  * Represents a rate-limit given by Discord.
  *
  * @author David Cole <david.cole1340@gmail.com>
  */
-class RateLimit
+class RateLimit extends RuntimeException
 {
     /**
      * Whether the rate-limit is global.

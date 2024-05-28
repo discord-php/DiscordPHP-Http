@@ -19,7 +19,7 @@
         "php": "^7.4|^8.0",
         "react/http": "^1.2",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
-        "react/promise": "^2.2"
+        "react/promise": "^2.2 || ^3.0.0"
     },
     "suggest": {
         "guzzlehttp/guzzle": "For alternative to ReactPHP/Http Browser"
