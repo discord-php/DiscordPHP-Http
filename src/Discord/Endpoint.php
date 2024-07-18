@@ -80,6 +80,14 @@ class Endpoint
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE = self::CHANNEL_THREADS.'/archived/private';
     // GET
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE_ME = self::CHANNEL.'/users/@me/threads/archived/private';
+    // GET
+    public const CHANNEL_POLLS = self::CHANNEL.'/polls';
+    // GET
+    public const CHANNEL_POLL = self::CHANNEL.'/polls/:message_id';
+    // GET
+    public const CHANNEL_POLL_ANSWERS = self::CHANNEL_POLL.'/answers/:answer_id';
+    // POST
+    public const CHANNEL_POLL_END = self::CHANNEL_POLL.'/expire';
 
     // GET, PATCH, DELETE
     public const THREAD = 'channels/:thread_id';
