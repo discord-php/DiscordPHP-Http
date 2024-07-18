@@ -87,7 +87,7 @@ class Endpoint
     // GET
     public const CHANNEL_POLL_ANSWERS = self::CHANNEL_POLL.'/answers/:answer_id';
     // POST
-    public const CHANNEL_POLL_END = self::CHANNEL_POLL.'/expire';
+    public const CHANNEL_POLL_EXPIRE = self::CHANNEL_POLL.'/expire';
 
     // GET, PATCH, DELETE
     public const THREAD = 'channels/:thread_id';
