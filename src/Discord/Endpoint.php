@@ -100,7 +100,7 @@ class Endpoint
     public const USER_MESSAGE_REACTION = self::CHANNEL.'/messages/:message_id/reactions/:emoji/:user_id';
 
     // GET
-    public const MESSAGE_POLL = self::CHANNEL.'/polls/:message_id';
+    protected const MESSAGE_POLL = self::CHANNEL.'/polls/:message_id';
     // GET
     public const MESSAGE_POLL_ANSWER = self::MESSAGE_POLL.'/answers/:answer_id';
     // POST
