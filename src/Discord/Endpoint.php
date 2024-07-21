@@ -80,14 +80,6 @@ class Endpoint
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE = self::CHANNEL_THREADS.'/archived/private';
     // GET
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE_ME = self::CHANNEL.'/users/@me/threads/archived/private';
-    // GET
-    public const CHANNEL_POLLS = self::CHANNEL.'/polls';
-    // GET
-    public const CHANNEL_POLL = self::CHANNEL.'/polls/:message_id';
-    // GET
-    public const CHANNEL_POLL_ANSWERS = self::CHANNEL_POLL.'/answers/:answer_id';
-    // POST
-    public const CHANNEL_POLL_EXPIRE = self::CHANNEL_POLL.'/expire';
 
     // GET, PATCH, DELETE
     public const THREAD = 'channels/:thread_id';
@@ -106,6 +98,13 @@ class Endpoint
     public const OWN_MESSAGE_REACTION = self::CHANNEL.'/messages/:message_id/reactions/:emoji/@me';
     // DELETE
     public const USER_MESSAGE_REACTION = self::CHANNEL.'/messages/:message_id/reactions/:emoji/:user_id';
+
+    // GET
+    public const MESSAGE_POLL = self::CHANNEL.'/polls/:message_id';
+    // GET
+    public const MESSAGE_POLL_ANSWER = self::MESSAGE_POLL.'/answers/:answer_id';
+    // POST
+    public const MESSAGE_POLL_EXPIRE = self::MESSAGE_POLL.'/expire';
 
     // GET, POST
     public const CHANNEL_WEBHOOKS = self::CHANNEL.'/webhooks';
