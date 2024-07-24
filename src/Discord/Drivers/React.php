@@ -15,7 +15,7 @@ use Discord\Http\DriverInterface;
 use Discord\Http\Request;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use React\Socket\Connector;
 
 /**
@@ -54,7 +54,7 @@ class React implements DriverInterface
         $this->browser = $browser->withRejectErrorResponse(false);
     }
 
-    public function runRequest(Request $request): ExtendedPromiseInterface
+    public function runRequest(Request $request): PromiseInterface
     {
         return $this->browser->{$request->getMethod()}(
             $request->getUrl(),
