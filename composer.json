@@ -10,6 +10,9 @@
         }
     ],
     "autoload": {
+        "files": [
+            "src/Discord/PromiseHelpers/bootstrap.php"
+        ],
         "psr-4": {
             "Discord\\Http\\": "src/Discord",
             "Tests\\Discord\\Http\\": "tests/Discord"
@@ -19,7 +22,7 @@
         "php": "^7.4|^8.0",
         "react/http": "^1.2",
         "psr/log": "^1.1 || ^2.0 || ^3.0",
-        "react/promise": "^2.2"
+        "react/promise": "^2.8 || >=3.0 <=3.1"
     },
     "suggest": {
         "guzzlehttp/guzzle": "For alternative to ReactPHP/Http Browser"
