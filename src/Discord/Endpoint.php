@@ -21,6 +21,10 @@ class Endpoint
     // GET
     public const APPLICATION_SKUS = 'applications/:application_id/skus';
     // GET, POST
+    public const APPLICATION_EMOJIS = 'applications/:application_id/emojis';
+    // GET, PATCH, DELETE
+    public const APPLICATION_EMOJI = 'applications/:application_id/emojis/:emoji_id';
+    // GET, POST
     public const APPLICATION_ENTITLEMENTS = 'applications/:application_id/entitlements';
     // DELETE
     public const APPLICATION_ENTITLEMENT = 'applications/:application_id/entitlements/:entitlement_id';
