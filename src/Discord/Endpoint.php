@@ -84,6 +84,8 @@ class Endpoint
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE = self::CHANNEL_THREADS.'/archived/private';
     // GET
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE_ME = self::CHANNEL.'/users/@me/threads/archived/private';
+    // POST
+    public const CHANNEL_SEND_SOUNDBOARD_SOUND = self::CHANNEL . '/send-soundboard-sound';
 
     // GET, PATCH, DELETE
     public const THREAD = 'channels/:thread_id';
@@ -207,6 +209,11 @@ class Endpoint
     // GET
     public const GUILD_SCHEDULED_EVENT_USERS = self::GUILD.'/scheduled-events/:guild_scheduled_event_id/users';
 
+    // GET, POST
+    public const GUILD_SOUNDBOARD_SOUNDS = self::GUILD.'/soundboard-sounds';
+    // GET, PATCH, DELETE
+    public const GUILD_SOUNDBOARD_SOUND = self::GUILD.'/soundboard-sounds/:sound_id';
+
     // GET, DELETE
     public const INVITE = 'invites/:code';
 
@@ -226,6 +233,9 @@ class Endpoint
     public const GUILD_AUTO_MODERATION_RULES = self::GUILD.'/auto-moderation/rules';
     // GET, PATCH, DELETE
     public const GUILD_AUTO_MODERATION_RULE = self::GUILD.'/auto-moderation/rules/:auto_moderation_rule_id';
+
+    // GET
+    public const SOUNDBOARD_DEFAULT_SOUNDS = 'soundboard-default-sounds';
 
     // GET, PATCH
     public const USER_CURRENT = 'users/@me';
