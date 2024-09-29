@@ -27,27 +27,29 @@ class Endpoint
     // GET, POST
     public const APPLICATION_ENTITLEMENTS = 'applications/:application_id/entitlements';
     // DELETE
-    public const APPLICATION_ENTITLEMENT = 'applications/:application_id/entitlements/:entitlement_id';
+    public const APPLICATION_ENTITLEMENT = self::APPLICATION_ENTITLEMENTS.'/:entitlement_id';
+    // POST
+    public const APPLICATION_ENTITLEMENT_CONSUME = self::APPLICATION_ENTITLEMENT.'/consume';
     // GET, POST, PUT
     public const GLOBAL_APPLICATION_COMMANDS = 'applications/:application_id/commands';
     // GET, PATCH, DELETE
-    public const GLOBAL_APPLICATION_COMMAND = 'applications/:application_id/commands/:command_id';
+    public const GLOBAL_APPLICATION_COMMAND = self::GLOBAL_APPLICATION_COMMANDS.'/:command_id';
     // GET, POST, PUT
     public const GUILD_APPLICATION_COMMANDS = 'applications/:application_id/guilds/:guild_id/commands';
     // GET, PUT
-    public const GUILD_APPLICATION_COMMANDS_PERMISSIONS = 'applications/:application_id/guilds/:guild_id/commands/permissions';
+    public const GUILD_APPLICATION_COMMANDS_PERMISSIONS = self::GUILD_APPLICATION_COMMANDS.'/permissions';
     // GET, PATCH, DELETE
-    public const GUILD_APPLICATION_COMMAND = 'applications/:application_id/guilds/:guild_id/commands/:command_id';
+    public const GUILD_APPLICATION_COMMAND = self::GUILD_APPLICATION_COMMANDS.'/:command_id';
     // GET, PUT
-    public const GUILD_APPLICATION_COMMAND_PERMISSIONS = 'applications/:application_id/guilds/:guild_id/commands/:command_id/permissions';
+    public const GUILD_APPLICATION_COMMAND_PERMISSIONS = self::GUILD_APPLICATION_COMMANDS.'/:command_id/permissions';
     // POST
     public const INTERACTION_RESPONSE = 'interactions/:interaction_id/:interaction_token/callback';
-    // PATCH, DELETE
-    public const ORIGINAL_INTERACTION_RESPONSE = 'webhooks/:application_id/:interaction_token/messages/@original';
     // POST
     public const CREATE_INTERACTION_FOLLOW_UP = 'webhooks/:application_id/:interaction_token';
     // PATCH, DELETE
-    public const INTERACTION_FOLLOW_UP = 'webhooks/:application_id/:interaction_token/messages/:message_id';
+    public const ORIGINAL_INTERACTION_RESPONSE = self::CREATE_INTERACTION_FOLLOW_UP.'/messages/@original';
+    // PATCH, DELETE
+    public const INTERACTION_FOLLOW_UP = self::CREATE_INTERACTION_FOLLOW_UP.'/messages/:message_id';
 
     // GET
     public const AUDIT_LOG = 'guilds/:guild_id/audit-logs';
