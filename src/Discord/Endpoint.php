@@ -52,6 +52,11 @@ class Endpoint
     public const INTERACTION_FOLLOW_UP = self::CREATE_INTERACTION_FOLLOW_UP.'/messages/:message_id';
 
     // GET
+    public const SKU_SUBSCRIPTIONS = '/skus/:sku_id/subscriptions';
+    // GET
+    public const SKU_SUBSCRIPTION = self::SKU_SUBSCRIPTIONS.'/:subscription_id';
+
+    // GET
     public const AUDIT_LOG = 'guilds/:guild_id/audit-logs';
 
     // GET, PATCH, DELETE
