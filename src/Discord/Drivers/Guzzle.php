@@ -17,7 +17,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * guzzlehttp/guzzle driver for Discord HTTP client. (still with React Promise).
@@ -55,7 +55,7 @@ class Guzzle implements DriverInterface
         $this->client = new Client($options);
     }
 
-    public function runRequest(Request $request): ExtendedPromiseInterface
+    public function runRequest(Request $request): PromiseInterface
     {
         // Create a React promise
         $deferred = new Deferred();
