@@ -11,6 +11,7 @@
 
 namespace Discord\Http;
 
+use Composer\InstalledVersions;
 use Discord\Http\Exceptions\BadRequestException;
 use Discord\Http\Exceptions\ContentTooLongException;
 use Discord\Http\Exceptions\InvalidTokenException;
@@ -24,7 +25,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use SplQueue;
 
 /**
@@ -127,6 +128,12 @@ class Http
      */
     protected $waiting = 0;
 
+
+    /**
+     * Whether react/promise v3 is used, if false, using v2
+     */
+    protected $promiseV3 = true;
+
     /**
      * Http wrapper constructor.
      *
@@ -141,6 +148,8 @@ class Http
         $this->logger = $logger;
         $this->driver = $driver;
         $this->queue = new SplQueue;
+
+        $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '0.3.');
     }
 
     /**
@@ -160,9 +169,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function get($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function get($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -178,9 +187,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function post($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function post($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -196,9 +205,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function put($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function put($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -214,9 +223,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function patch($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function patch($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -232,9 +241,9 @@ class Http
      * @param mixed           $content
      * @param array           $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function delete($url, $content = null, array $headers = []): ExtendedPromiseInterface
+    public function delete($url, $content = null, array $headers = []): PromiseInterface
     {
         if (! ($url instanceof Endpoint)) {
             $url = Endpoint::bind($url);
@@ -251,9 +260,9 @@ class Http
      * @param mixed    $content
      * @param array    $headers
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    public function queueRequest(string $method, Endpoint $url, $content, array $headers = []): ExtendedPromiseInterface
+    public function queueRequest(string $method, Endpoint $url, $content, array $headers = []): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -318,9 +327,9 @@ class Http
      * @param Request  $request
      * @param Deferred $deferred
      *
-     * @return ExtendedPromiseInterface
+     * @return PromiseInterface
      */
-    protected function executeRequest(Request $request, Deferred $deferred = null): ExtendedPromiseInterface
+    protected function executeRequest(Request $request, Deferred $deferred = null): PromiseInterface
     {
         if ($deferred === null) {
             $deferred = new Deferred();
@@ -332,7 +341,8 @@ class Http
             return $deferred->promise();
         }
 
-        $this->driver->runRequest($request)->done(function (ResponseInterface $response) use ($request, $deferred) {
+        // Promises v3 changed `->then` to behave as `->done` and removed `->then`. We still need the behaviour of `->done` in projects using v2
+        $this->driver->runRequest($request)->{$this->promiseV3 ? 'then' : 'done'}(function (ResponseInterface $response) use ($request, $deferred) {
             $data = json_decode((string) $response->getBody());
             $statusCode = $response->getStatusCode();
 

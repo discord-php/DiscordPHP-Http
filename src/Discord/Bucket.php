@@ -11,6 +11,7 @@
 
 namespace Discord\Http;
 
+use Composer\InstalledVersions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
@@ -88,6 +89,11 @@ class Bucket
     protected $resetTimer;
 
     /**
+     * Whether react/promise v3 is used, if false, using v2
+     */
+    protected $promiseV3 = true;
+
+    /**
      * Bucket constructor.
      *
      * @param string   $name
@@ -100,6 +106,8 @@ class Bucket
         $this->loop = $loop;
         $this->logger = $logger;
         $this->runRequest = $runRequest;
+
+        $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '0.3.');
     }
 
     /**
@@ -149,7 +157,8 @@ class Bucket
             /** @var Request */
             $request = $this->queue->dequeue();
 
-            ($this->runRequest)($request)->done(function (ResponseInterface $response) use (&$checkQueue) {
+            // Promises v3 changed `->then` to behave as `->done` and removed `->then`. We still need the behaviour of `->done` in projects using v2
+            ($this->runRequest)($request)->{$this->promiseV3 ? 'then' : 'done'}(function (ResponseInterface $response) use (&$checkQueue) {
                 $resetAfter = (float) $response->getHeaderLine('X-Ratelimit-Reset-After');
                 $limit = $response->getHeaderLine('X-Ratelimit-Limit');
                 $remaining = $response->getHeaderLine('X-Ratelimit-Remaining');
