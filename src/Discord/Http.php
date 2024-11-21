@@ -141,7 +141,7 @@ class Http
      * @param LoopInterface        $loop
      * @param DriverInterface|null $driver
      */
-    public function __construct(string $token, LoopInterface $loop, LoggerInterface $logger, DriverInterface $driver = null)
+    public function __construct(string $token, LoopInterface $loop, LoggerInterface $logger, ?DriverInterface $driver = null)
     {
         $this->token = $token;
         $this->loop = $loop;
@@ -325,11 +325,11 @@ class Http
      * Executes a request.
      *
      * @param Request  $request
-     * @param Deferred $deferred
+     * @param Deferred|null $deferred
      *
      * @return PromiseInterface
      */
-    protected function executeRequest(Request $request, Deferred $deferred = null): PromiseInterface
+    protected function executeRequest(Request $request, ?Deferred $deferred = null): PromiseInterface
     {
         if ($deferred === null) {
             $deferred = new Deferred();
