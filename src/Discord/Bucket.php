@@ -107,7 +107,7 @@ class Bucket
         $this->logger = $logger;
         $this->runRequest = $runRequest;
 
-        $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '0.3.');
+        $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '3.');
     }
 
     /**
