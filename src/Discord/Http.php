@@ -149,7 +149,7 @@ class Http
         $this->driver = $driver;
         $this->queue = new SplQueue;
 
-        $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '0.3.');
+        $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '3.');
     }
 
     /**
