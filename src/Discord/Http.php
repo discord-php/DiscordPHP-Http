@@ -525,10 +525,10 @@ class Http
         [$request, $deferred] = $this->interactionQueue->dequeue();
 
         $this->executeRequest($request)->then(function ($result) use ($deferred) {
-            $this->checkInteractionQueue();
+            $this->checkQueue();
             $deferred->resolve($result);
         }, function ($e) use ($deferred) {
-            $this->checkInteractionQueue();
+            $this->checkQueue();
             $deferred->reject($e);
         });
     }
