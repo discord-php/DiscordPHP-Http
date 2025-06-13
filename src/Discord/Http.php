@@ -469,9 +469,8 @@ class Http
      */
     protected function checkQueue(): void
     {
-        if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) {
+        if ($this->queue->isEmpty()) {
             $this->logger->debug('http not checking', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
-
             return;
         }
 
@@ -480,17 +479,45 @@ class Http
          * @var Deferred $deferred
          */
         [$request, $deferred] = $this->queue->dequeue();
-        ++$this->waiting;
 
-        $this->executeRequest($request)->then(function ($result) use ($deferred) {
-            --$this->waiting;
+        // Allow interaction endpoints to bypass the concurrent request limit
+        if (!(($is_interaction_endpoint = $this->isInteractionEndpoint($request)) || $this->waiting < static::CONCURRENT_REQUESTS)) {
+            // If not allowed, re-queue and exit
+            $this->queue->enqueue([$request, $deferred]);
+            $this->logger->debug('http not checking', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
+            return;
+        }
+
+        if (!$is_interaction_endpoint) {
+            ++$this->waiting;
+        }
+
+        $this->executeRequest($request)->then(function ($result) use ($deferred, $request) {
+            if (!$this->isInteractionEndpoint($request)) {
+                --$this->waiting;
+            }
             $this->checkQueue();
             $deferred->resolve($result);
-        }, function ($e) use ($deferred) {
-            --$this->waiting;
+        }, function ($e) use ($deferred, $request) {
+            if (!$this->isInteractionEndpoint($request)) {
+                --$this->waiting;
+            }
             $this->checkQueue();
             $deferred->reject($e);
         });
+    }
+
+    /**
+     * Checks if the request is for an interaction endpoint.
+     *
+     * @param Request $request
+     * @return bool
+     */
+    protected function isInteractionEndpoint(Request $request): bool
+    {
+        // Adjust this check if you support more interaction endpoints
+        $endpoint = (string) $request->getUrl();
+        return strpos($endpoint, '/interactions') === 0;
     }
 
     /**
