@@ -33,6 +33,13 @@ class Bucket
     protected $queue;
 
     /**
+     * Interaction request queue.
+     *
+     * @var SplQueue
+     */
+    protected $interactionQueue;
+
+    /**
      * Bucket name.
      *
      * @var string
@@ -102,6 +109,7 @@ class Bucket
     public function __construct(string $name, LoopInterface $loop, LoggerInterface $logger, callable $runRequest)
     {
         $this->queue = new SplQueue;
+        $this->interactionQueue = new SplQueue;
         $this->name = $name;
         $this->loop = $loop;
         $this->logger = $logger;
@@ -117,7 +125,9 @@ class Bucket
      */
     public function enqueue(Request $request)
     {
-        $this->queue->enqueue($request);
+        Http::isInteractionEndpoint($request)
+            ? $this->interactionQueue->enqueue($request)
+            : $this->queue->enqueue($request);
         $this->logger->debug($this.' queued '.$request);
         $this->checkQueue();
     }
@@ -132,88 +142,92 @@ class Bucket
             return;
         }
 
-        $checkQueue = function () use (&$checkQueue) {
-            // Check for rate-limits
-            if ($this->requestRemaining < 1 && ! is_null($this->requestRemaining)) {
-                $interval = 0;
-                if ($this->resetTimer) {
-                    $interval = $this->resetTimer->getInterval() ?? 0;
-                }
-                $this->logger->info($this.' expecting rate limit, timer interval '.($interval * 1000).' ms');
-                $this->checkerRunning = false;
-                $checkQueue = null;
-
-                return;
-            }
-
-            // Queue is empty, job done.
-            if ($this->queue->isEmpty()) {
-                $this->checkerRunning = false;
-                $checkQueue = null;
-
-                return;
-            }
-
-            /** @var Request */
-            $request = $this->queue->dequeue();
-
-            // Promises v3 changed `->then` to behave as `->done` and removed `->then`. We still need the behaviour of `->done` in projects using v2
-            ($this->runRequest)($request)->{$this->promiseV3 ? 'then' : 'done'}(function (ResponseInterface $response) use (&$checkQueue) {
-                $resetAfter = (float) $response->getHeaderLine('X-Ratelimit-Reset-After');
-                $limit = $response->getHeaderLine('X-Ratelimit-Limit');
-                $remaining = $response->getHeaderLine('X-Ratelimit-Remaining');
-
-                if ($resetAfter) {
-                    $resetAfter = (float) $resetAfter;
-
-                    if ($this->resetTimer) {
-                        $this->loop->cancelTimer($this->resetTimer);
-                    }
-
-                    $this->resetTimer = $this->loop->addTimer($resetAfter, function () {
-                        // Reset requests remaining and check queue
-                        $this->requestRemaining = $this->requestLimit;
-                        $this->resetTimer = null;
-                        $this->checkQueue();
-                    });
-                }
-
-                // Check if rate-limit headers are present and store
-                if (is_numeric($limit)) {
-                    $this->requestLimit = (int) $limit;
-                }
-
-                if (is_numeric($remaining)) {
-                    $this->requestRemaining = (int) $remaining;
-                }
-
-                // Check for more requests
-                $checkQueue();
-            }, function ($rateLimit) use (&$checkQueue, $request) {
-                if ($rateLimit instanceof RateLimit) {
-                    $this->queue->enqueue($request);
-
-                    // Bucket-specific rate-limit
-                    // Re-queue the request and wait the retry after time
-                    if (! $rateLimit->isGlobal()) {
-                        $this->loop->addTimer($rateLimit->getRetryAfter(), $checkQueue);
-                    }
-                    // Stop the queue checker for a global rate-limit.
-                    // Will be restarted when global rate-limit finished.
-                    else {
-                        $this->checkerRunning = false;
-                        $checkQueue = null;
-
-                        $this->logger->debug($this.' stopping queue checker');
-                    }
-                } else {
-                    $checkQueue();
-                }
-            });
-        };
-
         $this->checkerRunning = true;
-        $checkQueue();
+        $this->__checkQueue();
+    }
+
+    protected function __checkQueue(): void
+    {
+        // Check for rate-limits
+        if ($this->requestRemaining < 1 && ! is_null($this->requestRemaining)) {
+            $interval = ($this->resetTimer) ? $this->resetTimer->getInterval() ?? 0 : 0;
+            $this->logger->info($this.' expecting rate limit, timer interval '.($interval * 1000).' ms');
+            $this->checkerRunning = false;
+
+            return;
+        }
+
+        // Queue is empty, job done.
+        if ($this->queue->isEmpty() && ($interactionQueueEmpty = $this->interactionQueue->isEmpty())) {
+            $this->checkerRunning = false;
+
+            return;
+        }
+
+        /** @var Request */
+        $request = ($interactionQueueEmpty)
+            ? $this->queue->dequeue()
+            : $this->interactionQueue->dequeue();
+
+        $this->__runRequest($request);
+    }
+
+    protected function __runRequest($request, bool $interaction = false)
+    {
+        // Promises v3 changed `->then` to behave as `->done` and removed `->then`. We still need the behaviour of `->done` in projects using v2
+        ($this->runRequest)($request)->{$this->promiseV3 ? 'then' : 'done'}(function (ResponseInterface $response) {
+            $resetAfter = (float) $response->getHeaderLine('X-Ratelimit-Reset-After');
+            $limit = $response->getHeaderLine('X-Ratelimit-Limit');
+            $remaining = $response->getHeaderLine('X-Ratelimit-Remaining');
+
+            if ($resetAfter) {
+                $resetAfter = (float) $resetAfter;
+
+                if ($this->resetTimer) {
+                    $this->loop->cancelTimer($this->resetTimer);
+                }
+
+                $this->resetTimer = $this->loop->addTimer($resetAfter, function () {
+                    // Reset requests remaining and check queue
+                    $this->requestRemaining = $this->requestLimit;
+                    $this->resetTimer = null;
+                    $this->checkQueue();
+                });
+            }
+
+            // Check if rate-limit headers are present and store
+            if (is_numeric($limit)) {
+                $this->requestLimit = (int) $limit;
+            }
+
+            if (is_numeric($remaining)) {
+                $this->requestRemaining = (int) $remaining;
+            }
+
+            // Check for more requests
+            $this->__checkQueue();
+        }, function ($rateLimit) use ($request) {
+            if ($rateLimit instanceof RateLimit) {
+                Http::isInteractionEndpoint($request)
+                    ? $this->interactionQueue->enqueue($request)
+                    : $this->queue->enqueue($request);
+
+                // Bucket-specific rate-limit
+                // Re-queue the request and wait the retry after time
+                if (! $rateLimit->isGlobal()) {
+                    $this->loop->addTimer($rateLimit->getRetryAfter(), $this->__checkQueue());
+                }
+                // Stop the queue checker for a global rate-limit.
+                // Will be restarted when global rate-limit finished.
+                else {
+                    $this->checkerRunning = false;
+
+                    $this->logger->debug($this.' stopping queue checker');
+                }
+            } else {
+                $this->__checkQueue();
+            }
+        });
     }
 
     /**
