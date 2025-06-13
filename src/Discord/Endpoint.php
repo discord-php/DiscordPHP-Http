@@ -260,8 +260,10 @@ class Endpoint
     public const USER_CURRENT_CONNECTIONS = self::USER_CURRENT.'/connections';
     // GET, PUT
     public const USER_CURRENT_APPLICATION_ROLE_CONNECTION = self::USER_CURRENT.'/applications/:application_id/role-connection';
-    // GET
+    // GET, PATCH
     public const APPLICATION_CURRENT = 'applications/@me';
+    // GET
+    public const APPLICATION_ACTIVITY_INSTANCE = 'applications/:application_id/activity-instances/:instance_id';
 
     // GET, PATCH, DELETE
     public const WEBHOOK = 'webhooks/:webhook_id';
