@@ -535,13 +535,14 @@ class Http
 
     /**
      * Checks if the request is for an interaction endpoint.
+     * 
+     * @link https://discord.com/developers/docs/interactions/receiving-and-responding#endpoints
      *
      * @param Request $request
      * @return bool
      */
     public static function isInteractionEndpoint(Request $request): bool
     {
-        // Adjust this check if you support more interaction endpoints
         $endpoint = (string) $request->getUrl();
         return strpos($endpoint, '/interactions') === 0;
     }
