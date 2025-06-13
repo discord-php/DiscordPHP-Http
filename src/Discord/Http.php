@@ -122,6 +122,14 @@ class Http
     protected $queue;
 
     /**
+     * Request queue to prevent API
+     * overload.
+     *
+     * @var SplQueue
+     */
+    protected $interactionQueue;
+
+    /**
      * Number of requests that are waiting for a response.
      *
      * @var int
@@ -148,6 +156,7 @@ class Http
         $this->logger = $logger;
         $this->driver = $driver;
         $this->queue = new SplQueue;
+        $this->interactionQueue = new SplQueue;
 
         $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '3.');
     }
@@ -451,7 +460,9 @@ class Http
         if (! isset($this->buckets[$key])) {
             $bucket = new Bucket($key, $this->loop, $this->logger, function (Request $request) {
                 $deferred = new Deferred();
-                $this->queue->enqueue([$request, $deferred]);
+                self::isInteractionEndpoint($request)
+                    ? $this->interactionQueue->enqueue([$request, $deferred])
+                    : $this->queue->enqueue([$request, $deferred]);
                 $this->checkQueue();
 
                 return $deferred->promise();
@@ -469,8 +480,11 @@ class Http
      */
     protected function checkQueue(): void
     {
-        if ($this->queue->isEmpty()) {
-            $this->logger->debug('http not checking', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
+        $this->checkInteractionQueue();
+
+        if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) {
+            $this->logger->debug('http not checking queue', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
+
             return;
         }
 
@@ -479,30 +493,42 @@ class Http
          * @var Deferred $deferred
          */
         [$request, $deferred] = $this->queue->dequeue();
+        ++$this->waiting;
 
-        // Allow interaction endpoints to bypass the concurrent request limit
-        if (!(($is_interaction_endpoint = $this->isInteractionEndpoint($request)) || $this->waiting < static::CONCURRENT_REQUESTS)) {
-            // If not allowed, re-queue and exit
-            $this->queue->enqueue([$request, $deferred]);
-            $this->logger->debug('http not checking', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
+        $this->executeRequest($request)->then(function ($result) use ($deferred) {
+            --$this->waiting;
+            $this->checkQueue();
+            $deferred->resolve($result);
+        }, function ($e) use ($deferred) {
+            --$this->waiting;
+            $this->checkQueue();
+            $deferred->reject($e);
+        });
+    }
+
+    /**
+     * Checks the interaction queue to see if more requests can be
+     * sent out.
+     */
+    protected function checkInteractionQueue(): void
+    {
+        if ($this->interactionQueue->isEmpty()) {
+            $this->logger->debug('http not checking interaction queue', ['waiting' => $this->waiting, 'empty' => $this->interactionQueue->isEmpty()]);
+
             return;
         }
 
-        if (!$is_interaction_endpoint) {
-            ++$this->waiting;
-        }
+        /**
+         * @var Request  $request
+         * @var Deferred $deferred
+         */
+        [$request, $deferred] = $this->interactionQueue->dequeue();
 
-        $this->executeRequest($request)->then(function ($result) use ($deferred, $request) {
-            if (!$this->isInteractionEndpoint($request)) {
-                --$this->waiting;
-            }
-            $this->checkQueue();
+        $this->executeRequest($request)->then(function ($result) use ($deferred) {
+            $this->checkInteractionQueue();
             $deferred->resolve($result);
-        }, function ($e) use ($deferred, $request) {
-            if (!$this->isInteractionEndpoint($request)) {
-                --$this->waiting;
-            }
-            $this->checkQueue();
+        }, function ($e) use ($deferred) {
+            $this->checkInteractionQueue();
             $deferred->reject($e);
         });
     }
@@ -513,7 +539,7 @@ class Http
      * @param Request $request
      * @return bool
      */
-    protected function isInteractionEndpoint(Request $request): bool
+    public static function isInteractionEndpoint(Request $request): bool
     {
         // Adjust this check if you support more interaction endpoints
         $endpoint = (string) $request->getUrl();
