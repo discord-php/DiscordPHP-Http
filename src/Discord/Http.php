@@ -543,8 +543,7 @@ class Http
      */
     public static function isInteractionEndpoint(Request $request): bool
     {
-        $endpoint = (string) $request->getUrl();
-        return strpos($endpoint, '/interactions') === 0;
+        return strpos($request->getUrl(), '/interactions') === 0;
     }
 
     /**
