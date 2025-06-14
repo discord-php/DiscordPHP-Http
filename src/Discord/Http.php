@@ -478,9 +478,11 @@ class Http
      * Checks the request queue to see if more requests can be
      * sent out.
      */
-    protected function checkQueue(): void
+    protected function checkQueue(bool $check_interactions = true): void
     {
-        $this->checkInteractionQueue();
+        if ($check_interactions) {
+            $this->checkInteractionQueue();
+        }
 
         if ($this->waiting >= static::CONCURRENT_REQUESTS || $this->queue->isEmpty()) {
             $this->logger->debug('http not checking queue', ['waiting' => $this->waiting, 'empty' => $this->queue->isEmpty()]);
@@ -497,11 +499,11 @@ class Http
 
         $this->executeRequest($request)->then(function ($result) use ($deferred) {
             --$this->waiting;
-            $this->checkQueue();
+            $this->checkQueue(false);
             $deferred->resolve($result);
         }, function ($e) use ($deferred) {
             --$this->waiting;
-            $this->checkQueue();
+            $this->checkQueue(false);
             $deferred->reject($e);
         });
     }
