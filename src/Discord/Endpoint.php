@@ -78,9 +78,15 @@ class Endpoint
     // POST
     public const CHANNEL_TYPING = self::CHANNEL.'/typing';
     // GET
+    /** @deprecated Use `CHANNEL_MESSAGES_PINS` */
     public const CHANNEL_PINS = self::CHANNEL.'/pins';
     // PUT, DELETE
+    /** @deprecated Use `CHANNEL_MESSAGES_PINS` */
     public const CHANNEL_PIN = self::CHANNEL.'/pins/:message_id';
+    // GET
+    public const CHANNEL_MESSAGES_PINS = self::CHANNEL.'/messages/pins';
+    // PUT, DELETE
+    public const CHANNEL_MESSAGES_PIN = self::CHANNEL.'/messages/pins/:message_id';
     // POST
     public const CHANNEL_THREADS = self::CHANNEL.'/threads';
     // POST
