@@ -54,7 +54,7 @@ class React implements DriverInterface
         $this->browser = $browser->withRejectErrorResponse(false);
     }
 
-    public function runRequest(Request $request): PromiseInterface
+    public function runRequest($request): PromiseInterface
     {
         return $this->browser->{$request->getMethod()}(
             $request->getUrl(),
