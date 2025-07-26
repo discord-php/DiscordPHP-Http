@@ -56,9 +56,9 @@ class React implements DriverInterface
 
     /**
      * Runs the request using the React HTTP client.
-     * 
+     *
      * @param Request $request The request to run.
-     * 
+     *
      * @return PromiseInterface
      */
     public function runRequest($request): PromiseInterface

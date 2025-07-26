@@ -136,9 +136,8 @@ class Http
      */
     protected $waiting = 0;
 
-
     /**
-     * Whether react/promise v3 is used, if false, using v2
+     * Whether react/promise v3 is used, if false, using v2.
      */
     protected $promiseV3 = true;
 
@@ -333,7 +332,7 @@ class Http
     /**
      * Executes a request.
      *
-     * @param Request  $request
+     * @param Request       $request
      * @param Deferred|null $deferred
      *
      * @return PromiseInterface
@@ -537,10 +536,10 @@ class Http
 
     /**
      * Checks if the request is for an interaction endpoint.
-     * 
+     *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#endpoints
      *
-     * @param Request $request
+     * @param  Request $request
      * @return bool
      */
     public static function isInteractionEndpoint(Request $request): bool

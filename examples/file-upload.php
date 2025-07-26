@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is a part of the DiscordPHP-Http project.
+ *
+ * Copyright (c) 2021-present David Cole <david.cole1340@gmail.com>
+ *
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE file.
+ */
+
 use Discord\Http\Drivers\Guzzle;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
@@ -36,7 +45,7 @@ $imageField = new MultipartField(
 
 $multipart = new MultipartBody([
     $jsonPayloadField,
-    $imageField
+    $imageField,
 ]);
 
 $http->post(

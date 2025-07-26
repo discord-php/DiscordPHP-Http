@@ -89,7 +89,7 @@ class Bucket
     protected $resetTimer;
 
     /**
-     * Whether react/promise v3 is used, if false, using v2
+     * Whether react/promise v3 is used, if false, using v2.
      */
     protected $promiseV3 = true;
 
