@@ -138,6 +138,8 @@ class Endpoint implements EndpointInterface
     public const GUILD_CHANNELS = self::GUILD.'/channels';
     // GET
     public const GUILD_THREADS_ACTIVE = self::GUILD.'/threads/active';
+    // GET
+    public const GUILD_MESSAGES_SEARCH = self::GUILD.'/messages/search';
 
     // GET
     public const GUILD_MEMBERS = self::GUILD.'/members';
