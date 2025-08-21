@@ -51,7 +51,7 @@ trait EndpointTrait
     {
         if (! is_bool($value)) {
             $value = is_array($value)
-                ? (json_encode($value) ?: throw new \InvalidArgumentException('Invalid JSON'))
+                ? (implode(' ', $value))
                 : (string) $value;
         }
 
