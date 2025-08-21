@@ -50,7 +50,9 @@ trait EndpointTrait
     public function addQuery(string $key, $value): void
     {
         if (! is_bool($value)) {
-            $value = (string) $value;
+            $value = is_array($value)
+                ? (json_encode($value) ?: throw new \InvalidArgumentException('Invalid JSON'))
+                : (string) $value;
         }
 
         $this->query[$key] = $value;
