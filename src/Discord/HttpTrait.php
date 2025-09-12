@@ -415,9 +415,10 @@ trait HttpTrait
      */
     public static function isUnboundEndpoint(Request $request): bool
     {
+        $url = $request->getUrl();
         return
-            (strpos($request->getUrl(), '/interactions') !== false && strpos($request->getUrl(), '/callback') !== false)
-            || (strpos($request->getUrl(), '/webhooks') !== false);
+            (strpos($url, '/interactions') !== false && strpos($url, '/callback') !== false)
+            || strpos($url, '/webhooks') === 0;
     }
 
     /**
