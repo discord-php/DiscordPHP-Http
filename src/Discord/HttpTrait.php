@@ -330,8 +330,8 @@ trait HttpTrait
         if (! isset($this->buckets[$key])) {
             $bucket = new Bucket($key, $this->loop, $this->logger, function (Request $request) {
                 $deferred = new Deferred();
-                self::isInteractionEndpoint($request)
-                    ? $this->interactionQueue->enqueue([$request, $deferred])
+                self::isUnboundEndpoint($request)
+                    ? $this->unboundQueue->enqueue([$request, $deferred])
                     : $this->queue->enqueue([$request, $deferred]);
                 $this->checkQueue();
 
@@ -351,7 +351,7 @@ trait HttpTrait
     protected function checkQueue(bool $check_interactions = true): void
     {
         if ($check_interactions) {
-            $this->checkInteractionQueue();
+            $this->checkunboundQueue();
         }
 
         if ($this->waiting >= Http::CONCURRENT_REQUESTS || $this->queue->isEmpty()) {
@@ -382,10 +382,10 @@ trait HttpTrait
      * Checks the interaction queue to see if more requests can be
      * sent out.
      */
-    protected function checkInteractionQueue(): void
+    protected function checkunboundQueue(): void
     {
-        if ($this->interactionQueue->isEmpty()) {
-            $this->logger->debug('http not checking interaction queue', ['waiting' => $this->waiting, 'empty' => $this->interactionQueue->isEmpty()]);
+        if ($this->unboundQueue->isEmpty()) {
+            $this->logger->debug('http not checking interaction queue', ['waiting' => $this->waiting, 'empty' => $this->unboundQueue->isEmpty()]);
 
             return;
         }
@@ -394,7 +394,7 @@ trait HttpTrait
          * @var Request  $request
          * @var Deferred $deferred
          */
-        [$request, $deferred] = $this->interactionQueue->dequeue();
+        [$request, $deferred] = $this->unboundQueue->dequeue();
 
         $this->executeRequest($request)->then(function ($result) use ($deferred) {
             $this->checkQueue();
@@ -413,10 +413,11 @@ trait HttpTrait
      * @param  Request $request
      * @return bool
      */
-    public static function isInteractionEndpoint(Request $request): bool
+    public static function isUnboundEndpoint(Request $request): bool
     {
-        $url = $request->getUrl();
-        return strpos($url, '/interactions') === 0 || strpos($url, '/callback') === 0;
+        return
+            (strpos($request->getUrl(), '/interactions') !== false && strpos($request->getUrl(), '/callback') !== false)
+            || (strpos($request->getUrl(), '/webhooks') !== false && strpos($request->getUrl(), '/messages') !== false);
     }
 
     /**

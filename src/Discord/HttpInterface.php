@@ -28,7 +28,7 @@ interface HttpInterface
     public function patch($url, $content = null, array $headers = []): PromiseInterface;
     public function delete($url, $content = null, array $headers = []): PromiseInterface;
     public function queueRequest(string $method, Endpoint $url, $content, array $headers = []): PromiseInterface;
-    public static function isInteractionEndpoint(Request $request): bool;
+    public static function isUnboundEndpoint(Request $request): bool;
     public function handleError(ResponseInterface $response): \Throwable;
     public function getUserAgent(): string;
 }
