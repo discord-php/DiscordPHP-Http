@@ -417,7 +417,7 @@ trait HttpTrait
     {
         $url = $request->getUrl();
         return
-            (strpos($url, '/interactions') !== false && strpos($url, '/callback') !== false)
+            (strpos($url, '/interactions') === 0 && strpos($url, '/callback') !== false)
             || strpos($url, '/webhooks') === 0;
     }
 
