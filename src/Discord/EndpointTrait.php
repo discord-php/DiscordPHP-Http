@@ -74,9 +74,7 @@ trait EndpointTrait
 
         // Process in order of longest to shortest variable name to prevent partial replacements (see #16).
         $vars = $this->vars;
-        usort($vars, function ($a, $b) {
-            return strlen($b) <=> strlen($a);
-        });
+        usort($vars, fn ($a, $b) => strlen($b) <=> strlen($a));
 
         foreach ($vars as $var) {
             if (
