@@ -415,7 +415,8 @@ trait HttpTrait
      */
     public static function isInteractionEndpoint(Request $request): bool
     {
-        return strpos($request->getUrl(), '/interactions') === 0;
+        $url = $request->getUrl();
+        return strpos($url, '/interactions') === 0 || strpos($url, '/callback') === 0;
     }
 
     /**
