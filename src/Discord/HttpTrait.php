@@ -406,7 +406,7 @@ trait HttpTrait
     }
 
     /**
-     * Checks if the request is for an interaction endpoint.
+     * Checks if the request is for an endpoint not bound by the global rate limit.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#endpoints
      *
