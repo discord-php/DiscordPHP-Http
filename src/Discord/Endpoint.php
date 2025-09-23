@@ -253,8 +253,10 @@ class Endpoint implements EndpointInterface
     // GET, PATCH, DELETE
     public const GUILD_AUTO_MODERATION_RULE = self::GUILD.'/auto-moderation/rules/:auto_moderation_rule_id';
 
+    // POST
+    public const LOBBIES = 'lobbies';
     // GET, PATCH, DELETE
-    public const LOBBY = 'lobbies/:lobby_id';
+    public const LOBBY = self::LOBBIES.'/:lobby_id';
     // PUT, DELETE
     public const LOBBY_MEMBER = self::LOBBY.'/members/:user_id/';
     // DELETE
