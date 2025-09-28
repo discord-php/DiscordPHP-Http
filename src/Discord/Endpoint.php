@@ -276,7 +276,7 @@ class Endpoint implements EndpointInterface
     // DELETE
     public const USER_CURRENT_GUILD = self::USER_CURRENT.'/guilds/:guild_id';
     // GET
-    public const USER_CURRENT_MEMBER = self::USER_CURRENT.'/guilds/:guild_id/member';
+    public const USER_CURRENT_MEMBER = self::USER_CURRENT_GUILD.'/member';
     // GET, POST
     public const USER_CURRENT_CHANNELS = self::USER_CURRENT.'/channels';
     // GET
