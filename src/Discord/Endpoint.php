@@ -161,6 +161,8 @@ class Endpoint implements EndpointInterface
 
     // GET, PATCH
     public const GUILD_ROLES = self::GUILD.'/roles';
+    // GET
+    public const GUILD_ROLES_MEMBER_COUNTS = self::GUILD.'/roles/member-counts';
     // GET, POST, PATCH, DELETE
     public const GUILD_ROLE = self::GUILD.'/roles/:role_id';
 
