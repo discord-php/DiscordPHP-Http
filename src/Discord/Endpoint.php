@@ -156,6 +156,8 @@ class Endpoint implements EndpointInterface
 
     // GET
     public const GUILD_BANS = self::GUILD.'/bans';
+    // POST
+    public const GUILD_BULK_BAN = self::GUILD.'/bulk-ban';
     // GET, PUT, DELETE
     public const GUILD_BAN = self::GUILD.'/bans/:user_id';
 
