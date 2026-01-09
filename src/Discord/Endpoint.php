@@ -228,9 +228,17 @@ class Endpoint implements EndpointInterface
     // GET, POST
     public const GUILD_SCHEDULED_EVENTS = self::GUILD.'/scheduled-events';
     // GET, PATCH, DELETE
-    public const GUILD_SCHEDULED_EVENT = self::GUILD.'/scheduled-events/:guild_scheduled_event_id';
+    public const GUILD_SCHEDULED_EVENT = self::GUILD_SCHEDULED_EVENTS.'/:guild_scheduled_event_id';
     // GET
-    public const GUILD_SCHEDULED_EVENT_USERS = self::GUILD.'/scheduled-events/:guild_scheduled_event_id/users';
+    public const GUILD_SCHEDULED_EVENT_USERS = self::GUILD_SCHEDULED_EVENT.'/users';
+    // GET
+    public const GUILD_SCHEDULED_EVENT_USERS_COUNT = self::GUILD_SCHEDULED_EVENT_USERS.'/counts';
+    // GET, POST
+    public const GUILD_SCHEDULED_EVENT_EXCEPTIONS = self::GUILD_SCHEDULED_EVENT.'/exceptions';
+    // PATCH, DELETE
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION = self::GUILD_SCHEDULED_EVENT_EXCEPTIONS.'/:event_exception_id';
+    // GET
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_USERS = self::GUILD_SCHEDULED_EVENT_EXCEPTION.'/users';
 
     // GET, POST
     public const GUILD_SOUNDBOARD_SOUNDS = self::GUILD.'/soundboard-sounds';
