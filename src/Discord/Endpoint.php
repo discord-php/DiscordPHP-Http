@@ -224,6 +224,8 @@ class Endpoint implements EndpointInterface
     public const STICKER = 'stickers/:sticker_id';
     // GET
     public const STICKER_PACKS = 'sticker-packs';
+    // GET
+    public const STICKER_PACK = self::STICKER_PACKS.'/:pack_id';
 
     // GET, POST
     public const GUILD_SCHEDULED_EVENTS = self::GUILD.'/scheduled-events';
