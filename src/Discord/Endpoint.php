@@ -302,6 +302,8 @@ class Endpoint implements EndpointInterface
     // GET, PUT
     public const USER_CURRENT_APPLICATION_ROLE_CONNECTION = self::USER_CURRENT.'/applications/:application_id/role-connection';
     // GET, PATCH
+    public const APPLICATION = 'applications/:application_id';
+    // GET, PATCH
     public const APPLICATION_CURRENT = 'applications/@me';
     // GET
     public const APPLICATION_ACTIVITY_INSTANCE = 'applications/:application_id/activity-instances/:instance_id';
