@@ -14,314 +14,311 @@ namespace Discord\Http;
 class Endpoint implements EndpointInterface
 {
     use EndpointTrait;
-
-    // GET
+ 
+    /** GET */
     public const GATEWAY = 'gateway';
-    // GET
+    /** GET */
     public const GATEWAY_BOT = self::GATEWAY.'/bot';
 
-    // GET
+    /** GET */
     public const APPLICATION_SKUS = 'applications/:application_id/skus';
-    // GET, POST
+    /** GET, POST */
     public const APPLICATION_EMOJIS = 'applications/:application_id/emojis';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const APPLICATION_EMOJI = 'applications/:application_id/emojis/:emoji_id';
-    // GET, POST
+    /** GET, POST */
     public const APPLICATION_ENTITLEMENTS = 'applications/:application_id/entitlements';
-    // DELETE
+    /** DELETE */
     public const APPLICATION_ENTITLEMENT = self::APPLICATION_ENTITLEMENTS.'/:entitlement_id';
-    // POST
+    /** POST */
     public const APPLICATION_ENTITLEMENT_CONSUME = self::APPLICATION_ENTITLEMENT.'/consume';
-    // GET, POST, PUT
+    /** GET, POST, PUT */
     public const GLOBAL_APPLICATION_COMMANDS = 'applications/:application_id/commands';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GLOBAL_APPLICATION_COMMAND = self::GLOBAL_APPLICATION_COMMANDS.'/:command_id';
-    // GET, POST, PUT
+    /** GET, POST, PUT */
     public const GUILD_APPLICATION_COMMANDS = 'applications/:application_id/guilds/:guild_id/commands';
-    // GET, PUT
+    /** GET, PUT */
     public const GUILD_APPLICATION_COMMANDS_PERMISSIONS = self::GUILD_APPLICATION_COMMANDS.'/permissions';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GUILD_APPLICATION_COMMAND = self::GUILD_APPLICATION_COMMANDS.'/:command_id';
-    // GET, PUT
+    /** GET, PUT */
     public const GUILD_APPLICATION_COMMAND_PERMISSIONS = self::GUILD_APPLICATION_COMMANDS.'/:command_id/permissions';
-    // POST
+    /** POST */
     public const INTERACTION_RESPONSE = 'interactions/:interaction_id/:interaction_token/callback';
-    // POST
+    /** POST */
     public const CREATE_INTERACTION_FOLLOW_UP = 'webhooks/:application_id/:interaction_token';
-    // PATCH, DELETE
+    /** PATCH, DELETE */
     public const ORIGINAL_INTERACTION_RESPONSE = self::CREATE_INTERACTION_FOLLOW_UP.'/messages/@original';
-    // PATCH, DELETE
+    /** PATCH, DELETE */
     public const INTERACTION_FOLLOW_UP = self::CREATE_INTERACTION_FOLLOW_UP.'/messages/:message_id';
-
-    // GET
+    /** GET */
     public const SKU_SUBSCRIPTIONS = '/skus/:sku_id/subscriptions';
-    // GET
+    /** GET */
     public const SKU_SUBSCRIPTION = self::SKU_SUBSCRIPTIONS.'/:subscription_id';
 
-    // GET
+    /** GET */
     public const AUDIT_LOG = 'guilds/:guild_id/audit-logs';
 
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const CHANNEL = 'channels/:channel_id';
-    // GET, POST
+    /** GET, POST */
     public const CHANNEL_MESSAGES = self::CHANNEL.'/messages';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const CHANNEL_MESSAGE = self::CHANNEL.'/messages/:message_id';
-    // POST
+    /** POST */
     public const CHANNEL_CROSSPOST_MESSAGE = self::CHANNEL.'/messages/:message_id/crosspost';
-    // POST
+    /** POST */
     public const CHANNEL_MESSAGES_BULK_DELETE = self::CHANNEL.'/messages/bulk-delete';
-    // PUT, DELETE
+    /** PUT, DELETE */
     public const CHANNEL_PERMISSIONS = self::CHANNEL.'/permissions/:overwrite_id';
-    // GET, POST
+    /** GET, POST */
     public const CHANNEL_INVITES = self::CHANNEL.'/invites';
-    // POST
+    /** POST */
     public const CHANNEL_FOLLOW = self::CHANNEL.'/followers';
-    // POST
+    /** POST */
     public const CHANNEL_TYPING = self::CHANNEL.'/typing';
-    // GET
     /** @deprecated Use `CHANNEL_MESSAGES_PINS` */
     public const CHANNEL_PINS = self::CHANNEL.'/pins';
-    // PUT, DELETE
-    /** @deprecated Use `CHANNEL_MESSAGES_PINS` */
+    /** @deprecated Use `CHANNEL_MESSAGES_PIN` */
     public const CHANNEL_PIN = self::CHANNEL.'/pins/:message_id';
-    // GET
+    /** GET */
     public const CHANNEL_MESSAGES_PINS = self::CHANNEL.'/messages/pins';
-    // PUT, DELETE
+    /** PUT, DELETE */
     public const CHANNEL_MESSAGES_PIN = self::CHANNEL.'/messages/pins/:message_id';
-    // POST
+    /** POST */
     public const CHANNEL_THREADS = self::CHANNEL.'/threads';
-    // POST
+    /** POST */
     public const CHANNEL_MESSAGE_THREADS = self::CHANNEL_MESSAGE.'/threads';
-    // GET
+    /** GET */
     public const CHANNEL_THREADS_ARCHIVED_PUBLIC = self::CHANNEL_THREADS.'/archived/public';
-    // GET
+    /** GET */
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE = self::CHANNEL_THREADS.'/archived/private';
-    // GET
+    /** GET */
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE_ME = self::CHANNEL.'/users/@me/threads/archived/private';
-    // POST
+    /** POST */
     public const CHANNEL_SEND_SOUNDBOARD_SOUND = self::CHANNEL.'/send-soundboard-sound';
 
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const THREAD = 'channels/:thread_id';
-    // GET
+    /** GET */
     public const THREAD_MEMBERS = self::THREAD.'/thread-members';
-    // GET, PUT, DELETE
+    /** GET, PUT, DELETE */
     public const THREAD_MEMBER = self::THREAD_MEMBERS.'/:user_id';
-    // PUT, DELETE
+    /** PUT, DELETE */
     public const THREAD_MEMBER_ME = self::THREAD_MEMBERS.'/@me';
 
-    // GET, DELETE
+    /** GET, DELETE */
     public const MESSAGE_REACTION_ALL = self::CHANNEL.'/messages/:message_id/reactions';
-    // GET, DELETE
+    /** GET, DELETE */
     public const MESSAGE_REACTION_EMOJI = self::CHANNEL.'/messages/:message_id/reactions/:emoji';
-    // PUT, DELETE
+    /** PUT, DELETE */
     public const OWN_MESSAGE_REACTION = self::CHANNEL.'/messages/:message_id/reactions/:emoji/@me';
-    // DELETE
+    /** DELETE */
     public const USER_MESSAGE_REACTION = self::CHANNEL.'/messages/:message_id/reactions/:emoji/:user_id';
 
-    // GET
+    /** GET */
     protected const MESSAGE_POLL = self::CHANNEL.'/polls/:message_id';
-    // GET
+    /** GET */
     public const MESSAGE_POLL_ANSWER = self::MESSAGE_POLL.'/answers/:answer_id';
-    // POST
+    /** POST */
     public const MESSAGE_POLL_EXPIRE = self::MESSAGE_POLL.'/expire';
 
-    // GET, POST
+    /** GET, POST */
     public const CHANNEL_WEBHOOKS = self::CHANNEL.'/webhooks';
 
-    // POST
+    /** POST */
     public const GUILDS = 'guilds';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GUILD = 'guilds/:guild_id';
-    // GET, POST, PATCH
+    /** GET, POST, PATCH */
     public const GUILD_CHANNELS = self::GUILD.'/channels';
-    // GET
+    /** GET */
     public const GUILD_THREADS_ACTIVE = self::GUILD.'/threads/active';
-    // GET
+    /** GET */
     public const GUILD_MESSAGES_SEARCH = self::GUILD.'/messages/search';
 
-    // GET
+    /** GET */
     public const GUILD_MEMBERS = self::GUILD.'/members';
-    // GET
+    /** GET */
     public const GUILD_MEMBERS_SEARCH = self::GUILD.'/members/search';
-    // GET, PATCH, PUT, DELETE
+    /** GET, PATCH, PUT, DELETE */
     public const GUILD_MEMBER = self::GUILD.'/members/:user_id';
-    // PATCH
+    /** PATCH */
     public const GUILD_MEMBER_SELF = self::GUILD.'/members/@me';
     /** @deprecated 9.0.9 Use `GUILD_MEMBER_SELF` */
     public const GUILD_MEMBER_SELF_NICK = self::GUILD.'/members/@me/nick';
-    // PUT, DELETE
+    /** PUT, DELETE */
     public const GUILD_MEMBER_ROLE = self::GUILD.'/members/:user_id/roles/:role_id';
 
-    // GET
+    /** GET */
     public const GUILD_BANS = self::GUILD.'/bans';
-    // GET, PUT, DELETE
+    /** GET, PUT, DELETE */
     public const GUILD_BAN = self::GUILD.'/bans/:user_id';
-    // POST
+    /** POST */
     public const GUILD_BAN_BULK = self::GUILD.'/bulk-ban';
 
-    // GET, PATCH
+    /** GET, PATCH */
     public const GUILD_ROLES = self::GUILD.'/roles';
-    // GET
+    /** GET */
     public const GUILD_ROLES_MEMBER_COUNTS = self::GUILD.'/roles/member-counts';
-    // GET, POST, PATCH, DELETE
+    /** GET, POST, PATCH, DELETE */
     public const GUILD_ROLE = self::GUILD.'/roles/:role_id';
 
-    // POST
+    /** POST */
     public const GUILD_MFA = self::GUILD.'/mfa';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILD_INVITES = self::GUILD.'/invites';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILD_INTEGRATIONS = self::GUILD.'/integrations';
-    // PATCH, DELETE
+    /** PATCH, DELETE */
     public const GUILD_INTEGRATION = self::GUILD.'/integrations/:integration_id';
-    // POST
+    /** POST */
     public const GUILD_INTEGRATION_SYNC = self::GUILD.'/integrations/:integration_id/sync';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILD_EMOJIS = self::GUILD.'/emojis';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GUILD_EMOJI = self::GUILD.'/emojis/:emoji_id';
 
-    // GET
+    /** GET */
     public const GUILD_PREVIEW = self::GUILD.'/preview';
-    // GET, POST
+    /** GET, POST */
     public const GUILD_PRUNE = self::GUILD.'/prune';
-    // GET
+    /** GET */
     public const GUILD_REGIONS = self::GUILD.'/regions';
-    // GET, PATCH
+    /** GET, PATCH */
     public const GUILD_WIDGET_SETTINGS = self::GUILD.'/widget';
-    // GET
+    /** GET */
     public const GUILD_WIDGET = self::GUILD.'/widget.json';
-    // GET
+    /** GET */
     public const GUILD_WIDGET_IMAGE = self::GUILD.'/widget.png';
-    // GET, PATCH
+    /** GET, PATCH */
     public const GUILD_WELCOME_SCREEN = self::GUILD.'/welcome-screen';
-    // GET
+    /** GET */
     public const GUILD_ONBOARDING = self::GUILD.'/onboarding';
-    // GET
+    /** GET */
     public const LIST_VOICE_REGIONS = 'voice/regions';
-    // GET, PATCH
+    /** GET, PATCH */
     public const GUILD_USER_CURRENT_VOICE_STATE = self::GUILD.'/voice-states/@me';
-    // GET, PATCH
+    /** GET, PATCH */
     public const GUILD_USER_VOICE_STATE = self::GUILD.'/voice-states/:user_id';
-    // GET
+    /** GET */
     public const GUILD_VANITY_URL = self::GUILD.'/vanity-url';
-    // GET, PATCH
+    /** GET, PATCH */
     public const GUILD_MEMBERSHIP_SCREENING = self::GUILD.'/member-verification';
-    // GET
+    /** GET */
     public const GUILD_WEBHOOKS = self::GUILD.'/webhooks';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILD_STICKERS = self::GUILD.'/stickers';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GUILD_STICKER = self::GUILD.'/stickers/:sticker_id';
 
-    // GET
+    /** GET */
     public const STICKER = 'stickers/:sticker_id';
-    // GET
+    /** GET */
     public const STICKER_PACKS = 'sticker-packs';
-    // GET
+    /** GET */
     public const STICKER_PACK = self::STICKER_PACKS.'/:pack_id';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILD_SCHEDULED_EVENTS = self::GUILD.'/scheduled-events';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GUILD_SCHEDULED_EVENT = self::GUILD_SCHEDULED_EVENTS.'/:guild_scheduled_event_id';
-    // GET
+    /** GET */
     public const GUILD_SCHEDULED_EVENT_USERS = self::GUILD_SCHEDULED_EVENT.'/users';
-    // GET
+    /** GET */
     public const GUILD_SCHEDULED_EVENT_USERS_COUNT = self::GUILD_SCHEDULED_EVENT_USERS.'/counts';
-    // GET, POST
+    /** GET, POST */
     public const GUILD_SCHEDULED_EVENT_EXCEPTIONS = self::GUILD_SCHEDULED_EVENT.'/exceptions';
-    // PATCH, DELETE
+    /** PATCH, DELETE */
     public const GUILD_SCHEDULED_EVENT_EXCEPTION = self::GUILD_SCHEDULED_EVENT_EXCEPTIONS.'/:event_exception_id';
-    // GET
+    /** GET */
     public const GUILD_SCHEDULED_EVENT_EXCEPTION_USERS = self::GUILD_SCHEDULED_EVENT_EXCEPTION.'/users';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILD_SOUNDBOARD_SOUNDS = self::GUILD.'/soundboard-sounds';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GUILD_SOUNDBOARD_SOUND = self::GUILD.'/soundboard-sounds/:sound_id';
 
-    // GET, DELETE
+    /** GET, DELETE */
     public const INVITE = 'invites/:code';
-    // GET, PUT
+    /** GET, PUT */
     public const INVITE_TARGET_USERS = self::INVITE.'/target-users';
-    // GET
+    /** GET */
     public const INVITE_TARGET_USERS_JOB_STATUS = self::INVITE_TARGET_USERS.'/job-status';
 
-    // POST
+    /** POST */
     public const STAGE_INSTANCES = 'stage-instances';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const STAGE_INSTANCE = 'stage-instances/:channel_id';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILDS_TEMPLATE = self::GUILDS.'/templates/:template_code';
-    // GET, POST
+    /** GET, POST */
     public const GUILD_TEMPLATES = self::GUILD.'/templates';
-    // PUT, PATCH, DELETE
+    /** PUT, PATCH, DELETE */
     public const GUILD_TEMPLATE = self::GUILD.'/templates/:template_code';
 
-    // GET, POST
+    /** GET, POST */
     public const GUILD_AUTO_MODERATION_RULES = self::GUILD.'/auto-moderation/rules';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const GUILD_AUTO_MODERATION_RULE = self::GUILD.'/auto-moderation/rules/:auto_moderation_rule_id';
 
-    // POST
+    /** POST */
     public const LOBBIES = 'lobbies';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const LOBBY = self::LOBBIES.'/:lobby_id';
-    // PUT, DELETE
+    /** PUT, DELETE */
     public const LOBBY_MEMBER = self::LOBBY.'/members/:user_id/';
-    // DELETE
+    /** DELETE */
     public const LOBBY_SELF = self::LOBBY.'/members/@me';
-    // PATCH
+    /** PATCH */
     public const LOBBY_CHANNEL_LINKING = self::LOBBY.'/channel-linking';
 
-    // GET
+    /** GET */
     public const SOUNDBOARD_DEFAULT_SOUNDS = 'soundboard-default-sounds';
 
-    // GET, PATCH
+    /** GET, PATCH */
     public const USER_CURRENT = 'users/@me';
-    // GET
+    /** GET */
     public const USER = 'users/:user_id';
-    // GET
+    /** GET */
     public const USER_CURRENT_GUILDS = self::USER_CURRENT.'/guilds';
-    // DELETE
+    /** DELETE */
     public const USER_CURRENT_GUILD = self::USER_CURRENT.'/guilds/:guild_id';
-    // GET
+    /** GET */
     public const USER_CURRENT_MEMBER = self::USER_CURRENT_GUILD.'/member';
-    // GET, POST
+    /** GET, POST */
     public const USER_CURRENT_CHANNELS = self::USER_CURRENT.'/channels';
-    // GET
+    /** GET */
     public const USER_CURRENT_CONNECTIONS = self::USER_CURRENT.'/connections';
-    // GET, PUT
+    /** GET, PUT */
     public const USER_CURRENT_APPLICATION_ROLE_CONNECTION = self::USER_CURRENT.'/applications/:application_id/role-connection';
-    // GET, PATCH
+    /** GET, PATCH */
     public const APPLICATION = 'applications/:application_id';
-    // GET, PATCH
+    /** GET, PATCH */
     public const APPLICATION_CURRENT = 'applications/@me';
-    // GET
+    /** GET */
     public const APPLICATION_ACTIVITY_INSTANCE = 'applications/:application_id/activity-instances/:instance_id';
 
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const WEBHOOK = 'webhooks/:webhook_id';
-    // GET, PATCH, DELETE
+    /** GET, PATCH, DELETE */
     public const WEBHOOK_TOKEN = 'webhooks/:webhook_id/:webhook_token';
-    // POST
+    /** POST */
     public const WEBHOOK_EXECUTE = self::WEBHOOK_TOKEN;
-    // POST
+    /** POST */
     public const WEBHOOK_EXECUTE_SLACK = self::WEBHOOK_EXECUTE.'/slack';
-    // POST
+    /** POST */
     public const WEBHOOK_EXECUTE_GITHUB = self::WEBHOOK_EXECUTE.'/github';
-    // PATCH, DELETE
+    /** PATCH, DELETE */
     public const WEBHOOK_MESSAGE = self::WEBHOOK_TOKEN.'/messages/:message_id';
 
-    // GET, PUT
+    /** GET, PUT */
     public const APPLICATION_ROLE_CONNECTION_METADATA = 'applications/:application_id/role-connections/metadata';
 
     /**
