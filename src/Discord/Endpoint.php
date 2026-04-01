@@ -88,6 +88,8 @@ class Endpoint implements EndpointInterface
     public const CHANNEL_MESSAGES_PIN = self::CHANNEL.'/messages/pins/:message_id';
     /** POST */
     public const CHANNEL_THREADS = self::CHANNEL.'/threads';
+    /** GET */
+    public const CHANNEL_THREADS_SEARCH = self::CHANNEL_THREADS.'/search';
     /** POST */
     public const CHANNEL_MESSAGE_THREADS = self::CHANNEL_MESSAGE.'/threads';
     /** GET */
@@ -131,6 +133,8 @@ class Endpoint implements EndpointInterface
     public const GUILDS = 'guilds';
     /** GET, PATCH, DELETE */
     public const GUILD = 'guilds/:guild_id';
+    /** GET */
+    public const GUILD_NEW_MEMBER_WELCOME = self::GUILD.'/new-member-welcome';
     /** GET, POST, PATCH */
     public const GUILD_CHANNELS = self::GUILD.'/channels';
     /** GET */
@@ -320,6 +324,47 @@ class Endpoint implements EndpointInterface
 
     /** GET, PUT */
     public const APPLICATION_ROLE_CONNECTION_METADATA = 'applications/:application_id/role-connections/metadata';
+
+    /**
+     * Bearer
+     */
+
+    /** POST */
+    public const APPLICATION_ATTACHMENT = 'applications/:application_id/attachment';
+    /** GET */
+    public const OAUTH2_ME = 'oauth2/@me';
+    /** GET */
+    public const OAUTH2_APPLICATIONS_ME = 'oauth2/applications/@me';
+    /** GET */
+    public const OAUTH2_KEYS = 'oauth2/keys';
+    /** GET */
+    public const OAUTH2_USERINFO = 'oauth2/userinfo';
+
+    /**
+     * Social SDK Layer
+     */
+
+    /** POST */
+    public const LOBBY_MEMBER_ME_INVITES = self::LOBBY.'/members/@me/invites';
+    /** POST */
+    public const LOBBY_MEMBERS_BULK = self::LOBBY.'/members/bulk';
+    /** POST */
+    public const LOBBY_MEMBER_INVITES = self::LOBBY.'/members/:user_id/invites';
+    /** GET, POST */
+    public const LOBBY_MESSAGES = self::LOBBY.'/messages';
+    /** PUT */
+    public const LOBBY_MESSAGE_MODERATION_METADATA = self::LOBBY.'/messages/:message_id/moderation-metadata';
+
+    /** PUT */
+    public const PARTNER_SDK_DMS_MESSAGE_MODERATION_METADATA = 'partner-sdk/dms/:user_id_1/:user_id_2/messages/:message_id/moderation-metadata';
+    /** POST */
+    public const PARTNER_SDK_PROVISIONAL_ACCOUNTS_UNMERGE = 'partner-sdk/provisional-accounts/unmerge';
+    /** POST */
+    public const PARTNER_SDK_PROVISIONAL_ACCOUNTS_UNMERGE_BOT = self::PARTNER_SDK_PROVISIONAL_ACCOUNTS_UNMERGE.'/bot';
+    /** POST */
+    public const PARTNER_SDK_TOKEN = 'partner-sdk/token';
+    /** POST */
+    public const PARTNER_SDK_TOKEN_BOT = self::PARTNER_SDK_TOKEN.'/bot';
 
     /**
      * Regex to identify parameters in endpoints.
