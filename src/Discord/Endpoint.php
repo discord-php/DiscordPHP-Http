@@ -100,6 +100,8 @@ class Endpoint implements EndpointInterface
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE_ME = self::CHANNEL.'/users/@me/threads/archived/private';
     /** POST */
     public const CHANNEL_SEND_SOUNDBOARD_SOUND = self::CHANNEL.'/send-soundboard-sound';
+    /** PUT, DELETE */
+    public const CHANNEL_RECIPIENT = self::CHANNEL.'/recipients/:user_id';
 
     /** GET, PATCH, DELETE */
     public const THREAD = 'channels/:thread_id';
