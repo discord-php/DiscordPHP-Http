@@ -100,6 +100,8 @@ class Endpoint implements EndpointInterface
     public const CHANNEL_THREADS_ARCHIVED_PRIVATE_ME = self::CHANNEL.'/users/@me/threads/archived/private';
     /** POST */
     public const CHANNEL_SEND_SOUNDBOARD_SOUND = self::CHANNEL.'/send-soundboard-sound';
+    /** PUT */
+    public const CHANNEL_VOICE_STATUS = self::CHANNEL.'/voice-status';
     /** PUT, DELETE */
     public const CHANNEL_RECIPIENT = self::CHANNEL.'/recipients/:user_id';
 
@@ -328,7 +330,7 @@ class Endpoint implements EndpointInterface
     public const APPLICATION_ROLE_CONNECTION_METADATA = 'applications/:application_id/role-connections/metadata';
 
     /**
-     * Bearer
+     * Bearer.
      */
 
     /** POST */
@@ -343,7 +345,7 @@ class Endpoint implements EndpointInterface
     public const OAUTH2_USERINFO = 'oauth2/userinfo';
 
     /**
-     * Social SDK Layer
+     * Social SDK Layer.
      */
 
     /** POST */

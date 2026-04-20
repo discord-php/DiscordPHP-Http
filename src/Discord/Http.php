@@ -30,7 +30,7 @@ class Http implements HttpInterface
      *
      * @var string
      */
-    public const VERSION = 'v10.8.0';
+    public const VERSION = 'v10.9.4';
 
     /**
      * Current Discord HTTP API version.
