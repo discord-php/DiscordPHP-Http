@@ -304,7 +304,7 @@ class Endpoint implements EndpointInterface
     public const USER_CURRENT_CHANNELS = self::USER_CURRENT.'/channels';
     /** GET */
     public const USER_CURRENT_CONNECTIONS = self::USER_CURRENT.'/connections';
-    /** GET, PUT */
+    /** GET, PUT, DELETE */
     public const USER_CURRENT_APPLICATION_ROLE_CONNECTION = self::USER_CURRENT.'/applications/:application_id/role-connection';
     /** GET, PATCH */
     public const APPLICATION = 'applications/:application_id';
