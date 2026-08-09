@@ -218,6 +218,10 @@ class Endpoint implements EndpointInterface
     /** GET, PATCH */
     public const GUILD_MEMBERSHIP_SCREENING = self::GUILD.'/member-verification';
     /** GET */
+    public const GUILD_JOIN_REQUESTS = self::GUILD.'/requests';
+    /** PATCH */
+    public const GUILD_JOIN_REQUEST = self::GUILD_JOIN_REQUESTS.'/:join_request_id';
+    /** GET */
     public const GUILD_WEBHOOKS = self::GUILD.'/webhooks';
 
     /** GET, POST */
