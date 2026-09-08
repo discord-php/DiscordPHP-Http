@@ -7,3 +7,8 @@ test.php
 .php-cs-fixer.cache
 .vscode
 .phpunit.cache
+/build/
+/.phpdoc/
+/tools/
+/phive.xml
+/.phive/
