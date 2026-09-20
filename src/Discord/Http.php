@@ -14,6 +14,7 @@ namespace Discord\Http;
 use Composer\InstalledVersions;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
+use React\EventLoop\TimerInterface;
 use SplQueue;
 
 /**
