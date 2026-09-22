@@ -711,10 +711,30 @@ Search.appendIndex(
             "summary": "GET,\u0020PUT",
             "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS"
         },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_BULK_ADD",
+            "name": "INVITE_TARGET_USERS_BULK_ADD",
+            "summary": "POST",
+            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_BULK_ADD"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_BULK_DELETE",
+            "name": "INVITE_TARGET_USERS_BULK_DELETE",
+            "summary": "POST",
+            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_BULK_DELETE"
+        },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_JOB_STATUS",
             "name": "INVITE_TARGET_USERS_JOB_STATUS",
             "summary": "GET",
             "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_JOB_STATUS"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_ADD",
+            "name": "INVITE_TARGET_USERS_ADD",
+            "summary": "PUT",
+            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_ADD"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_REMOVE",
+            "name": "INVITE_TARGET_USERS_REMOVE",
+            "summary": "DELETE",
+            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_REMOVE"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ASTAGE_INSTANCES",
             "name": "STAGE_INSTANCES",
