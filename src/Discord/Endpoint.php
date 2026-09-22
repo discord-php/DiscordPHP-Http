@@ -260,8 +260,16 @@ class Endpoint implements EndpointInterface
     public const INVITE = 'invites/:code';
     /** GET, PUT */
     public const INVITE_TARGET_USERS = self::INVITE.'/target-users';
+    /** POST */
+    public const INVITE_TARGET_USERS_BULK_ADD = self::INVITE_TARGET_USERS.'/bulk-add';
+    /** POST */
+    public const INVITE_TARGET_USERS_BULK_DELETE = self::INVITE_TARGET_USERS.'/bulk-delete';
     /** GET */
     public const INVITE_TARGET_USERS_JOB_STATUS = self::INVITE_TARGET_USERS.'/job-status';
+    /** PUT */
+    public const INVITE_TARGET_USERS_ADD = self::INVITE_TARGET_USERS.'/:user_id';
+    /** DELETE */
+    public const INVITE_TARGET_USERS_REMOVE = self::INVITE_TARGET_USERS.'/:user_id';
 
     /** POST */
     public const STAGE_INSTANCES = 'stage-instances';
