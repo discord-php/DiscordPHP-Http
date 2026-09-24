@@ -207,6 +207,8 @@ class Endpoint implements EndpointInterface
     public const GUILD_WELCOME_SCREEN = self::GUILD.'/welcome-screen';
     /** GET */
     public const GUILD_ONBOARDING = self::GUILD.'/onboarding';
+    /** PUT */
+    public const GUILD_INCIDENT_ACTIONS = self::GUILD.'/incident-actions';
     /** GET */
     public const LIST_VOICE_REGIONS = 'voice/regions';
     /** GET, PATCH */
@@ -288,12 +290,12 @@ class Endpoint implements EndpointInterface
     /** GET, PATCH, DELETE */
     public const GUILD_AUTO_MODERATION_RULE = self::GUILD.'/auto-moderation/rules/:auto_moderation_rule_id';
 
-    /** POST */
+    /** POST, PUT */
     public const LOBBIES = 'lobbies';
     /** GET, PATCH, DELETE */
     public const LOBBY = self::LOBBIES.'/:lobby_id';
     /** PUT, DELETE */
-    public const LOBBY_MEMBER = self::LOBBY.'/members/:user_id/';
+    public const LOBBY_MEMBER = self::LOBBY.'/members/:user_id';
     /** DELETE */
     public const LOBBY_SELF = self::LOBBY.'/members/@me';
     /** PATCH */
@@ -340,6 +342,14 @@ class Endpoint implements EndpointInterface
 
     /** GET, PUT */
     public const APPLICATION_ROLE_CONNECTION_METADATA = 'applications/:application_id/role-connections/metadata';
+    /** GET, PATCH */
+    public const APPLICATION_USER_IDENTITY_PROFILE = self::APPLICATION.'/users/:user_id/identities/:provider_issued_user_id/profile';
+    /** GET */
+    public const APPLICATION_IDENTITIES_BY_EXTERNAL_ID = self::APPLICATION.'/application-identities/:provider_type/:provider_issued_user_id';
+    /** GET */
+    public const USER_APPLICATION_IDENTITIES = self::USER.'/application-identities/:application_id';
+    /** POST */
+    public const USER_APPLICATION_IDENTITY_DELETE = self::USER_APPLICATION_IDENTITIES.'/:provider_type/:provider_issued_user_id/delete';
 
     /**
      * Bearer.
@@ -381,6 +391,8 @@ class Endpoint implements EndpointInterface
     public const PARTNER_SDK_TOKEN = 'partner-sdk/token';
     /** POST */
     public const PARTNER_SDK_TOKEN_BOT = self::PARTNER_SDK_TOKEN.'/bot';
+    /** POST */
+    public const PARTNER_SDK_CHILD_TOKEN = 'partner-sdk/child-token';
 
     /**
      * Regex to identify parameters in endpoints.

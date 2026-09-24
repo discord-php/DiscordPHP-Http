@@ -132,6 +132,42 @@ class EndpointTest extends TestCase
         );
     }
 
+    public function testNoEndpointEndsInASlash()
+    {
+        // Sent verbatim, so a trailing slash is a different route to Discord.
+        foreach ((new \ReflectionClass(Endpoint::class))->getConstants() as $name => $value) {
+            if (is_string($value) && $name !== 'REGEX') {
+                $this->assertStringEndsNotWith('/', $value, $name);
+            }
+        }
+    }
+
+    public function testLobbyMemberBindsWithoutATrailingSlash()
+    {
+        $this->assertEquals(
+            'lobbies/111/members/222',
+            (string) Endpoint::bind(Endpoint::LOBBY_MEMBER, '111', '222')
+        );
+    }
+
+    public function testApplicationIdentityRoutesBindEveryParameter()
+    {
+        // `:user_id` and `:provider_issued_user_id` share a suffix; the longer
+        // name must not be half-replaced by the shorter one.
+        $this->assertEquals(
+            'applications/7/users/5/identities/abc/profile',
+            (string) Endpoint::bind(Endpoint::APPLICATION_USER_IDENTITY_PROFILE, '7', '5', 'abc')
+        );
+        $this->assertEquals(
+            'users/5/application-identities/7/steam/abc/delete',
+            (string) Endpoint::bind(Endpoint::USER_APPLICATION_IDENTITY_DELETE, '5', '7', 'steam', 'abc')
+        );
+        $this->assertEquals(
+            'applications/7/application-identities/steam/abc',
+            (string) Endpoint::bind(Endpoint::APPLICATION_IDENTITIES_BY_EXTERNAL_ID, '7', 'steam', 'abc')
+        );
+    }
+
     public function testItConvertsToString()
     {
         $this->assertEquals(
