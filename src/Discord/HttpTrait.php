@@ -42,6 +42,16 @@ trait HttpTrait
     }
 
     /**
+     * Gets the HTTP driver, so another client can share it.
+     *
+     * @return DriverInterface|null
+     */
+    public function getDriver(): ?DriverInterface
+    {
+        return $this->driver;
+    }
+
+    /**
      * Runs a GET request.
      *
      * @param string|Endpoint $url
@@ -151,17 +161,19 @@ trait HttpTrait
             return $deferred->promise();
         }
 
-        $headers = array_merge($headers, [
-            'User-Agent' => $this->getUserAgent(),
-            'Authorization' => $this->token,
-            'X-Ratelimit-Precision' => 'millisecond',
-        ]);
-
         $baseHeaders = [
             'User-Agent' => $this->getUserAgent(),
             'Authorization' => $this->token,
             'X-Ratelimit-Precision' => 'millisecond',
         ];
+
+        // A client created without a token sends no Authorization at all, for
+        // routes that take the application's credentials in the body instead.
+        if ($this->token === '') {
+            unset($baseHeaders['Authorization']);
+        }
+
+        $headers = array_merge($headers, $baseHeaders);
 
         if (! is_null($content) && ! isset($headers['Content-Type'])) {
             $baseHeaders = array_merge(

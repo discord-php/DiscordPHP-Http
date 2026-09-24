@@ -367,6 +367,10 @@ class Endpoint implements EndpointInterface
     public const OAUTH2_KEYS = 'oauth2/keys';
     /** GET */
     public const OAUTH2_USERINFO = 'oauth2/userinfo';
+    /** POST */
+    public const OAUTH2_TOKEN = 'oauth2/token';
+    /** POST */
+    public const OAUTH2_TOKEN_REVOKE = self::OAUTH2_TOKEN.'/revoke';
 
     /**
      * Social SDK Layer.
