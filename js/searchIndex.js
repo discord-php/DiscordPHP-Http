@@ -946,6 +946,16 @@ Search.appendIndex(
             "summary": "GET",
             "url": "classes/Discord-Http-Endpoint.html#constant_OAUTH2_USERINFO"
         },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AOAUTH2_TOKEN",
+            "name": "OAUTH2_TOKEN",
+            "summary": "POST",
+            "url": "classes/Discord-Http-Endpoint.html#constant_OAUTH2_TOKEN"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AOAUTH2_TOKEN_REVOKE",
+            "name": "OAUTH2_TOKEN_REVOKE",
+            "summary": "POST",
+            "url": "classes/Discord-Http-Endpoint.html#constant_OAUTH2_TOKEN_REVOKE"
+        },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ALOBBY_MEMBER_ME_INVITES",
             "name": "LOBBY_MEMBER_ME_INVITES",
             "summary": "POST",
@@ -1325,6 +1335,11 @@ Search.appendIndex(
             "name": "setDriver",
             "summary": "Sets\u0020the\u0020driver\u0020of\u0020the\u0020HTTP\u0020client.",
             "url": "classes/Discord-Http-HttpTrait.html#method_setDriver"
+        },                {
+            "fqsen": "\\Discord\\Http\\HttpTrait\u003A\u003AgetDriver\u0028\u0029",
+            "name": "getDriver",
+            "summary": "Gets\u0020the\u0020HTTP\u0020driver,\u0020so\u0020another\u0020client\u0020can\u0020share\u0020it.",
+            "url": "classes/Discord-Http-HttpTrait.html#method_getDriver"
         },                {
             "fqsen": "\\Discord\\Http\\HttpTrait\u003A\u003Aget\u0028\u0029",
             "name": "get",
