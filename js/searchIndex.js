@@ -183,7 +183,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AAPPLICATION_ENTITLEMENT",
             "name": "APPLICATION_ENTITLEMENT",
-            "summary": "DELETE",
+            "summary": "GET,\u0020DELETE",
             "url": "classes/Discord-Http-Endpoint.html#constant_APPLICATION_ENTITLEMENT"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AAPPLICATION_ENTITLEMENT_CONSUME",
@@ -233,12 +233,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AORIGINAL_INTERACTION_RESPONSE",
             "name": "ORIGINAL_INTERACTION_RESPONSE",
-            "summary": "PATCH,\u0020DELETE",
+            "summary": "GET,\u0020PATCH,\u0020DELETE",
             "url": "classes/Discord-Http-Endpoint.html#constant_ORIGINAL_INTERACTION_RESPONSE"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINTERACTION_FOLLOW_UP",
             "name": "INTERACTION_FOLLOW_UP",
-            "summary": "PATCH,\u0020DELETE",
+            "summary": "GET,\u0020PATCH,\u0020DELETE",
             "url": "classes/Discord-Http-Endpoint.html#constant_INTERACTION_FOLLOW_UP"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ASKU_SUBSCRIPTIONS",
@@ -503,7 +503,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AGUILD_ROLES",
             "name": "GUILD_ROLES",
-            "summary": "GET,\u0020PATCH",
+            "summary": "GET,\u0020POST,\u0020PATCH",
             "url": "classes/Discord-Http-Endpoint.html#constant_GUILD_ROLES"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AGUILD_ROLES_MEMBER_COUNTS",
@@ -588,8 +588,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AGUILD_ONBOARDING",
             "name": "GUILD_ONBOARDING",
-            "summary": "GET",
+            "summary": "GET,\u0020PUT",
             "url": "classes/Discord-Http-Endpoint.html#constant_GUILD_ONBOARDING"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AGUILD_INCIDENT_ACTIONS",
+            "name": "GUILD_INCIDENT_ACTIONS",
+            "summary": "PUT",
+            "url": "classes/Discord-Http-Endpoint.html#constant_GUILD_INCIDENT_ACTIONS"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ALIST_VOICE_REGIONS",
             "name": "LIST_VOICE_REGIONS",
@@ -711,6 +716,16 @@ Search.appendIndex(
             "summary": "GET,\u0020PUT",
             "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS"
         },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_ADD",
+            "name": "INVITE_TARGET_USERS_ADD",
+            "summary": "PUT",
+            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_ADD"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_REMOVE",
+            "name": "INVITE_TARGET_USERS_REMOVE",
+            "summary": "DELETE",
+            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_REMOVE"
+        },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_BULK_ADD",
             "name": "INVITE_TARGET_USERS_BULK_ADD",
             "summary": "POST",
@@ -725,16 +740,6 @@ Search.appendIndex(
             "name": "INVITE_TARGET_USERS_JOB_STATUS",
             "summary": "GET",
             "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_JOB_STATUS"
-        },                {
-            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_ADD",
-            "name": "INVITE_TARGET_USERS_ADD",
-            "summary": "PUT",
-            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_ADD"
-        },                {
-            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AINVITE_TARGET_USERS_REMOVE",
-            "name": "INVITE_TARGET_USERS_REMOVE",
-            "summary": "DELETE",
-            "url": "classes/Discord-Http-Endpoint.html#constant_INVITE_TARGET_USERS_REMOVE"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ASTAGE_INSTANCES",
             "name": "STAGE_INSTANCES",
@@ -773,7 +778,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ALOBBIES",
             "name": "LOBBIES",
-            "summary": "POST",
+            "summary": "POST,\u0020PUT",
             "url": "classes/Discord-Http-Endpoint.html#constant_LOBBIES"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ALOBBY",
@@ -841,6 +846,11 @@ Search.appendIndex(
             "summary": "GET,\u0020PUT,\u0020DELETE",
             "url": "classes/Discord-Http-Endpoint.html#constant_USER_CURRENT_APPLICATION_ROLE_CONNECTION"
         },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AUSER_CURRENT_APPLICATION_ENTITLEMENTS",
+            "name": "USER_CURRENT_APPLICATION_ENTITLEMENTS",
+            "summary": "GET",
+            "url": "classes/Discord-Http-Endpoint.html#constant_USER_CURRENT_APPLICATION_ENTITLEMENTS"
+        },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AAPPLICATION",
             "name": "APPLICATION",
             "summary": "GET,\u0020PATCH",
@@ -883,13 +893,33 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AWEBHOOK_MESSAGE",
             "name": "WEBHOOK_MESSAGE",
-            "summary": "PATCH,\u0020DELETE",
+            "summary": "GET,\u0020PATCH,\u0020DELETE",
             "url": "classes/Discord-Http-Endpoint.html#constant_WEBHOOK_MESSAGE"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AAPPLICATION_ROLE_CONNECTION_METADATA",
             "name": "APPLICATION_ROLE_CONNECTION_METADATA",
             "summary": "GET,\u0020PUT",
             "url": "classes/Discord-Http-Endpoint.html#constant_APPLICATION_ROLE_CONNECTION_METADATA"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AAPPLICATION_USER_IDENTITY_PROFILE",
+            "name": "APPLICATION_USER_IDENTITY_PROFILE",
+            "summary": "GET,\u0020PATCH",
+            "url": "classes/Discord-Http-Endpoint.html#constant_APPLICATION_USER_IDENTITY_PROFILE"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AAPPLICATION_IDENTITIES_BY_EXTERNAL_ID",
+            "name": "APPLICATION_IDENTITIES_BY_EXTERNAL_ID",
+            "summary": "GET",
+            "url": "classes/Discord-Http-Endpoint.html#constant_APPLICATION_IDENTITIES_BY_EXTERNAL_ID"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AUSER_APPLICATION_IDENTITIES",
+            "name": "USER_APPLICATION_IDENTITIES",
+            "summary": "GET",
+            "url": "classes/Discord-Http-Endpoint.html#constant_USER_APPLICATION_IDENTITIES"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AUSER_APPLICATION_IDENTITY_DELETE",
+            "name": "USER_APPLICATION_IDENTITY_DELETE",
+            "summary": "POST",
+            "url": "classes/Discord-Http-Endpoint.html#constant_USER_APPLICATION_IDENTITY_DELETE"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AAPPLICATION_ATTACHMENT",
             "name": "APPLICATION_ATTACHMENT",
@@ -965,6 +995,11 @@ Search.appendIndex(
             "name": "PARTNER_SDK_TOKEN_BOT",
             "summary": "POST",
             "url": "classes/Discord-Http-Endpoint.html#constant_PARTNER_SDK_TOKEN_BOT"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003APARTNER_SDK_CHILD_TOKEN",
+            "name": "PARTNER_SDK_CHILD_TOKEN",
+            "summary": "POST",
+            "url": "classes/Discord-Http-Endpoint.html#constant_PARTNER_SDK_CHILD_TOKEN"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AREGEX",
             "name": "REGEX",
