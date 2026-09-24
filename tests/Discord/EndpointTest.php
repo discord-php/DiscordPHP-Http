@@ -168,6 +168,14 @@ class EndpointTest extends TestCase
         );
     }
 
+    public function testScheduledEventExceptionUsersHasNoExceptionsSegment()
+    {
+        $this->assertEquals(
+            'guilds/1/scheduled-events/2/3/users',
+            (string) Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_EXCEPTION_USERS, '1', '2', '3')
+        );
+    }
+
     public function testItConvertsToString()
     {
         $this->assertEquals(

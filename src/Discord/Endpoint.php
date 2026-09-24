@@ -28,7 +28,7 @@ class Endpoint implements EndpointInterface
     public const APPLICATION_EMOJI = 'applications/:application_id/emojis/:emoji_id';
     /** GET, POST */
     public const APPLICATION_ENTITLEMENTS = 'applications/:application_id/entitlements';
-    /** DELETE */
+    /** GET, DELETE */
     public const APPLICATION_ENTITLEMENT = self::APPLICATION_ENTITLEMENTS.'/:entitlement_id';
     /** POST */
     public const APPLICATION_ENTITLEMENT_CONSUME = self::APPLICATION_ENTITLEMENT.'/consume';
@@ -48,9 +48,9 @@ class Endpoint implements EndpointInterface
     public const INTERACTION_RESPONSE = 'interactions/:interaction_id/:interaction_token/callback';
     /** POST */
     public const CREATE_INTERACTION_FOLLOW_UP = 'webhooks/:application_id/:interaction_token';
-    /** PATCH, DELETE */
+    /** GET, PATCH, DELETE */
     public const ORIGINAL_INTERACTION_RESPONSE = self::CREATE_INTERACTION_FOLLOW_UP.'/messages/@original';
-    /** PATCH, DELETE */
+    /** GET, PATCH, DELETE */
     public const INTERACTION_FOLLOW_UP = self::CREATE_INTERACTION_FOLLOW_UP.'/messages/:message_id';
     /** GET */
     public const SKU_SUBSCRIPTIONS = '/skus/:sku_id/subscriptions';
@@ -166,7 +166,7 @@ class Endpoint implements EndpointInterface
     /** POST */
     public const GUILD_BAN_BULK = self::GUILD.'/bulk-ban';
 
-    /** GET, PATCH */
+    /** GET, POST, PATCH */
     public const GUILD_ROLES = self::GUILD.'/roles';
     /** GET */
     public const GUILD_ROLES_MEMBER_COUNTS = self::GUILD.'/roles/member-counts';
@@ -205,7 +205,7 @@ class Endpoint implements EndpointInterface
     public const GUILD_WIDGET_IMAGE = self::GUILD.'/widget.png';
     /** GET, PATCH */
     public const GUILD_WELCOME_SCREEN = self::GUILD.'/welcome-screen';
-    /** GET */
+    /** GET, PUT */
     public const GUILD_ONBOARDING = self::GUILD.'/onboarding';
     /** PUT */
     public const GUILD_INCIDENT_ACTIONS = self::GUILD.'/incident-actions';
@@ -251,7 +251,7 @@ class Endpoint implements EndpointInterface
     /** PATCH, DELETE */
     public const GUILD_SCHEDULED_EVENT_EXCEPTION = self::GUILD_SCHEDULED_EVENT_EXCEPTIONS.'/:event_exception_id';
     /** GET */
-    public const GUILD_SCHEDULED_EVENT_EXCEPTION_USERS = self::GUILD_SCHEDULED_EVENT_EXCEPTION.'/users';
+    public const GUILD_SCHEDULED_EVENT_EXCEPTION_USERS = self::GUILD_SCHEDULED_EVENT.'/:event_exception_id/users';
 
     /** GET, POST */
     public const GUILD_SOUNDBOARD_SOUNDS = self::GUILD.'/soundboard-sounds';
@@ -320,6 +320,8 @@ class Endpoint implements EndpointInterface
     public const USER_CURRENT_CONNECTIONS = self::USER_CURRENT.'/connections';
     /** GET, PUT, DELETE */
     public const USER_CURRENT_APPLICATION_ROLE_CONNECTION = self::USER_CURRENT.'/applications/:application_id/role-connection';
+    /** GET */
+    public const USER_CURRENT_APPLICATION_ENTITLEMENTS = self::USER_CURRENT.'/applications/:application_id/entitlements';
     /** GET, PATCH */
     public const APPLICATION = 'applications/:application_id';
     /** GET, PATCH */
@@ -337,7 +339,7 @@ class Endpoint implements EndpointInterface
     public const WEBHOOK_EXECUTE_SLACK = self::WEBHOOK_EXECUTE.'/slack';
     /** POST */
     public const WEBHOOK_EXECUTE_GITHUB = self::WEBHOOK_EXECUTE.'/github';
-    /** PATCH, DELETE */
+    /** GET, PATCH, DELETE */
     public const WEBHOOK_MESSAGE = self::WEBHOOK_TOKEN.'/messages/:message_id';
 
     /** GET, PUT */
