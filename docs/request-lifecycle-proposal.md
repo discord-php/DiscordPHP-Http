@@ -156,6 +156,17 @@ the test itself uses no live HTTP or local HTTP server. Composer scripts/plugins
 are disabled, no application secrets are supplied, and the workflow has read-only
 repository permissions and a finite job timeout.
 
+CI generates a separate `composer.lifecycle.json` from the root manifest's
+unchanged runtime `require` and `autoload`, adding only PHPUnit as a development
+dependency. The selected promise-major constraint is applied within the root's
+supported range. This exercises the actual checked-out library source, but does
+**not** validate the normal full-repository development installation. The normal
+`composer.json` is not edited. This isolated job excludes PsySH and unrelated
+development tools; it does not ignore advisories or disable Composer's security
+policy. The existing `psy/psysh ^0.10.6` requirement remains unresolved in the
+normal development manifest: advisory `PKSA-4s4z-t146-6123` blocked the original
+full-development dependency resolution before any characterization tests ran.
+
 These are known-gap assertions: when a future lifecycle fix adopts a different
 contract, update them to assert that new contract rather than preserving the gap
 to keep CI green. Runtime changes remain deferred pending placement/API review
