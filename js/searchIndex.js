@@ -286,6 +286,16 @@ Search.appendIndex(
             "summary": "PUT,\u0020DELETE",
             "url": "classes/Discord-Http-Endpoint.html#constant_CHANNEL_PERMISSIONS"
         },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ACHANNEL_MEMBER_PERMISSIONS",
+            "name": "CHANNEL_MEMBER_PERMISSIONS",
+            "summary": "GET\u0020\u002D\u0020Proposed\u0020in\u0020discord\/discord\u002Dapi\u002Ddocs\u00238695.",
+            "url": "classes/Discord-Http-Endpoint.html#constant_CHANNEL_MEMBER_PERMISSIONS"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ACHANNEL_ROLE_PERMISSIONS",
+            "name": "CHANNEL_ROLE_PERMISSIONS",
+            "summary": "GET\u0020\u002D\u0020Proposed\u0020in\u0020discord\/discord\u002Dapi\u002Ddocs\u00238695.",
+            "url": "classes/Discord-Http-Endpoint.html#constant_CHANNEL_ROLE_PERMISSIONS"
+        },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003ACHANNEL_INVITES",
             "name": "CHANNEL_INVITES",
             "summary": "GET,\u0020POST",
@@ -470,6 +480,16 @@ Search.appendIndex(
             "name": "GUILD_MEMBER",
             "summary": "GET,\u0020PATCH,\u0020PUT,\u0020DELETE",
             "url": "classes/Discord-Http-Endpoint.html#constant_GUILD_MEMBER"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AGUILD_MEMBER_PERMISSIONS",
+            "name": "GUILD_MEMBER_PERMISSIONS",
+            "summary": "GET\u0020\u002D\u0020Proposed\u0020in\u0020discord\/discord\u002Dapi\u002Ddocs\u00238695.",
+            "url": "classes/Discord-Http-Endpoint.html#constant_GUILD_MEMBER_PERMISSIONS"
+        },                {
+            "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AGUILD_ROLE_PERMISSIONS",
+            "name": "GUILD_ROLE_PERMISSIONS",
+            "summary": "GET\u0020\u002D\u0020Proposed\u0020in\u0020discord\/discord\u002Dapi\u002Ddocs\u00238695.",
+            "url": "classes/Discord-Http-Endpoint.html#constant_GUILD_ROLE_PERMISSIONS"
         },                {
             "fqsen": "\\Discord\\Http\\Endpoint\u003A\u003AGUILD_MEMBER_SELF",
             "name": "GUILD_MEMBER_SELF",
