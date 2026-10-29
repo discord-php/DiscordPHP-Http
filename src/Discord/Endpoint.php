@@ -72,6 +72,10 @@ class Endpoint implements EndpointInterface
     public const CHANNEL_MESSAGES_BULK_DELETE = self::CHANNEL.'/messages/bulk-delete';
     /** PUT, DELETE */
     public const CHANNEL_PERMISSIONS = self::CHANNEL.'/permissions/:overwrite_id';
+    /** GET - Proposed in discord/discord-api-docs#8695. */
+    public const CHANNEL_MEMBER_PERMISSIONS = self::CHANNEL.'/permissions/member/:user_id';
+    /** GET - Proposed in discord/discord-api-docs#8695. */
+    public const CHANNEL_ROLE_PERMISSIONS = self::CHANNEL.'/permissions/role/:role_id';
     /** GET, POST */
     public const CHANNEL_INVITES = self::CHANNEL.'/invites';
     /** POST */
@@ -152,6 +156,10 @@ class Endpoint implements EndpointInterface
     public const GUILD_MEMBERS_SEARCH = self::GUILD.'/members/search';
     /** GET, PATCH, PUT, DELETE */
     public const GUILD_MEMBER = self::GUILD.'/members/:user_id';
+    /** GET - Proposed in discord/discord-api-docs#8695. */
+    public const GUILD_MEMBER_PERMISSIONS = self::GUILD.'/permissions/member/:user_id';
+    /** GET - Proposed in discord/discord-api-docs#8695. */
+    public const GUILD_ROLE_PERMISSIONS = self::GUILD.'/permissions/role/:role_id';
     /** PATCH */
     public const GUILD_MEMBER_SELF = self::GUILD.'/members/@me';
     /** @deprecated 9.0.9 Use `GUILD_MEMBER_SELF` */

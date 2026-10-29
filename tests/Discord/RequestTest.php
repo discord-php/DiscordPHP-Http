@@ -41,7 +41,7 @@ class RequestTest extends TestCase
 
     public function testGetDeferred()
     {
-        $deferred = Mockery::mock(Deferred::class);
+        $deferred = new Deferred();
         $request = $this->getRequest($deferred);
 
         $this->assertEquals($deferred, $request->getDeferred());
