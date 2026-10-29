@@ -16,6 +16,22 @@ use PHPUnit\Framework\TestCase;
 
 class EndpointTest extends TestCase
 {
+    public function testEffectivePermissionRoutesKeepTheResourceAsMajorParameter()
+    {
+        foreach ([
+            [Endpoint::GUILD_MEMBER_PERMISSIONS, 'guilds/10/permissions/member/20', 'guilds/10/permissions/member/:user_id'],
+            [Endpoint::GUILD_ROLE_PERMISSIONS, 'guilds/10/permissions/role/20', 'guilds/10/permissions/role/:role_id'],
+            [Endpoint::CHANNEL_MEMBER_PERMISSIONS, 'channels/10/permissions/member/20', 'channels/10/permissions/member/:user_id'],
+            [Endpoint::CHANNEL_ROLE_PERMISSIONS, 'channels/10/permissions/role/20', 'channels/10/permissions/role/:role_id'],
+        ] as [$route, $url, $bucket]) {
+            $endpoint = Endpoint::bind($route, '10', '20');
+            $this->assertSame($url, (string) $endpoint);
+            $endpoint->addQuery('implicit', false);
+            $this->assertSame($url.'?implicit=0', (string) $endpoint);
+            $this->assertSame($bucket, $endpoint->toAbsoluteEndpoint(true));
+        }
+    }
+
     /**
      * @dataProvider majorParamProvider
      */
