@@ -139,8 +139,13 @@ class Http implements HttpInterface
      * @param LoopInterface        $loop
      * @param DriverInterface|null $driver
      */
-    public function __construct(string $token, LoopInterface $loop, LoggerInterface $logger, ?DriverInterface $driver = null)
-    {
+    public function __construct(
+        #[\SensitiveParameter]
+        string $token,
+        LoopInterface $loop,
+        LoggerInterface $logger,
+        ?DriverInterface $driver = null
+    ) {
         $this->token = $token;
         $this->loop = $loop;
         $this->logger = $logger;
@@ -149,5 +154,19 @@ class Http implements HttpInterface
         $this->unboundQueue = new SplQueue;
 
         $this->promiseV3 = str_starts_with(InstalledVersions::getVersion('react/promise'), '3.');
+    }
+
+    /**
+     * Debug representation with the token masked, so var_dump() and Xdebug
+     * stack traces never print it.
+     *
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        $vars = get_object_vars($this);
+        $vars['token'] = '*****';
+
+        return $vars;
     }
 }
