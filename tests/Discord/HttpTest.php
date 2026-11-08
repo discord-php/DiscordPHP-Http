@@ -35,6 +35,25 @@ class HttpTest extends TestCase
         $this->assertSame('Bot abc', $driver->requests[0]->getHeaders()['Authorization']);
     }
 
+    public function testTheTokenIsMaskedInDebugOutput()
+    {
+        [$http] = $this->http('Bot secret-token-value');
+
+        $this->assertSame('*****', $http->__debugInfo()['token']);
+        $this->assertStringNotContainsString('secret-token-value', print_r($http, true));
+    }
+
+    /**
+     * @requires PHP >= 8.2
+     */
+    public function testTheTokenParameterIsRedactedFromStackTraces()
+    {
+        $parameter = (new \ReflectionMethod(Http::class, '__construct'))->getParameters()[0];
+
+        $this->assertSame('token', $parameter->getName());
+        $this->assertNotEmpty($parameter->getAttributes(\SensitiveParameter::class));
+    }
+
     public function testAClientWithoutATokenSendsNoAuthorization()
     {
         // For routes that take the application's credentials in the body.
