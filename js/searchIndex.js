@@ -1216,6 +1216,11 @@ Search.appendIndex(
             "summary": "Http\u0020wrapper\u0020constructor.",
             "url": "classes/Discord-Http-Http.html#method___construct"
         },                {
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003A__debugInfo\u0028\u0029",
+            "name": "__debugInfo",
+            "summary": "Debug\u0020representation\u0020with\u0020the\u0020token\u0020masked,\u0020so\u0020var_dump\u0028\u0029\u0020and\u0020Xdebug\nstack\u0020traces\u0020never\u0020print\u0020it.",
+            "url": "classes/Discord-Http-Http.html#method___debugInfo"
+        },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003AVERSION",
             "name": "VERSION",
             "summary": "DiscordPHP\u002DHttp\u0020version.",
