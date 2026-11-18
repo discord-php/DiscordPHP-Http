@@ -1,0 +1,70 @@
+name: Request lifecycle characterization
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/request-lifecycle-characterization.yml'
+      - 'src/**'
+      - 'tests/Discord/RequestLifecycleCharacterizationTest.php'
+      - 'docs/request-lifecycle-proposal.md'
+      - 'composer.json'
+      - 'composer.lock'
+      - 'phpunit.xml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  characterize:
+    name: PHP 8.4 / React Promise ${{ matrix.promise }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - promise: '2'
+            constraint: '^2.2'
+          - promise: '3'
+            constraint: '^3.0.0'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, dom, xml, xmlwriter
+          coverage: none
+          tools: composer:v2
+      - name: Prepare isolated characterization dependencies
+        # Keep the root runtime constraints and source autoloading unchanged.
+        # The normal development installation is not exercised by this job.
+        run: |
+          php <<'PHP'
+          <?php
+          $root = json_decode(file_get_contents('composer.json'), true, 512, JSON_THROW_ON_ERROR);
+          $manifest = [
+              'name' => 'discord-php/lifecycle-characterization',
+              'description' => 'Isolated dependencies for request lifecycle characterization',
+              'license' => $root['license'],
+              'require' => $root['require'],
+              'autoload' => $root['autoload'],
+              'require-dev' => ['phpunit/phpunit' => '^9.5'],
+          ];
+          file_put_contents('composer.lifecycle.json', json_encode($manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR).PHP_EOL);
+          PHP
+      - name: Resolve the selected promise major without scripts or plugins
+        env:
+          COMPOSER: composer.lifecycle.json
+          PROMISE_CONSTRAINT: ${{ matrix.constraint }}
+        run: composer update --with "react/promise:${PROMISE_CONSTRAINT}" --prefer-dist --no-interaction --no-progress --no-scripts --no-plugins
+      - name: Record the resolved promise version
+        run: php -r 'require "vendor/autoload.php"; echo Composer\InstalledVersions::getPrettyVersion("react/promise"), PHP_EOL;'
+      - name: Lint the isolated characterization test
+        run: php -l tests/Discord/RequestLifecycleCharacterizationTest.php
+      - name: Run only inert lifecycle characterization
+        # No composer test: it starts the repository's HTTP test server.
+        # These assertions document current gaps, not the desired future contract.
+        run: vendor/bin/phpunit tests/Discord/RequestLifecycleCharacterizationTest.php
